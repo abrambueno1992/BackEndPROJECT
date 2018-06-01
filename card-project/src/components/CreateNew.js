@@ -1,5 +1,5 @@
 import React from 'react';
-// import { addNote} from '../actions/actions'
+import { createNoteAction } from '../actions/actions'
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
@@ -64,7 +64,7 @@ class CreateNew extends React.Component {
         // this.props.addNote(this.state.note);
         // this.props.addTitle(this.state.title);
         const noteObject = { title: this.state.title, note: this.state.note, check: false, tag: this.state.tag };
-        this.props.addNote(noteObject);
+        this.props.createNoteAction(noteObject);
         this.refresh();
         this.setState({
             title: '',
@@ -92,4 +92,4 @@ const mapDispatchToProps = (state) => {
 	};
 };
 // export default CreateNew;
-// export default connect(mapDispatchToProps, { addNote})(CreateNew);
+export default connect(mapDispatchToProps, {createNoteAction })(CreateNew);

@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button, Modal, ModalBody, ModalFooter } from 'reactstrap';
 
-import { addNote, deleteNote, checkUpdate } from '../actions/actions';
+import { createNoteAction, deleteNote } from '../actions/actions';
 import { connect } from 'react-redux';
 
 const bStylec = {
@@ -69,7 +69,7 @@ class PresentationView extends React.Component {
 			Complete: 'NOT COMPLETE',
 			ccolor : 'red',
 		};
-		this.toggle = this.toggle.bind(this);
+		// this.toggle = this.toggle.bind(this);
 	}
 	componentDidMount() {
 		this.refresh();
@@ -78,7 +78,8 @@ class PresentationView extends React.Component {
 		this.props.notes;
 	};
 
-	toggle() {
+	toggle = (e) => {
+		e.preventDefault();
 		this.setState({
 			modal: !this.state.modal
 		});
@@ -168,4 +169,4 @@ const mapDispatchToProps = (state) => {
 		notes: state.notes
 	};
 };
-export default connect(mapDispatchToProps, { addNote, deleteNote, checkUpdate })(PresentationView);
+export default connect(mapDispatchToProps, { createNoteAction, deleteNote })(PresentationView);

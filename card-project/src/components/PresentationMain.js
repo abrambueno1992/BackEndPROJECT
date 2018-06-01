@@ -1,8 +1,9 @@
 import React from 'react';
 import ModalComponent from './ModalComponent';
 import { Link } from 'react-router-dom';
-import { addNote, deleteNote, addTag, reorderState } from '../actions/actions';
+import { createNoteAction, deleteNote,  reorderState, getNotesAction } from '../actions/actions';
 import { connect } from 'react-redux';
+import {withRouter} from 'react-router-dom'
 import { Button, Modal, ModalBody, ModalFooter } from 'reactstrap';
 
 // const cStyle = {
@@ -104,18 +105,36 @@ export class PresentationMain extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			renderB: true,
 			modal: false,
-			list: this.props.notes,
+			list: [],
 			tag: '',
-			isGoing: true,
 			showAscending: true,
-			orderTag: false
+			orderTag: false,
+			autheticated: 'Authenticated, Access Granted'
 		};
 	}
 
 	componentDidMount() {
-		this.props.notes;
+		console.log('this is in storage', localStorage.getItem('token'))
+        if (localStorage.getItem('token') !== null && localStorage.getItem('ID') !== null) {
+			
+			
+			this.props.getNotesAction(this.props.history);
+			this.callSet()
+			
+		} else {
+			this.setState({ autheticated: 'Not authenticated, Access Denied' })
+        }
+		// this.props.notes;
+	}
+	callSet= () => {
+		// this.props.getNotesAction();
+		if (this.state.list.length === 0) {
+			// this.props.history.push('/notes')
+			
+		}
+		this.setState({list: this.props.notes})
+		
 	}
 	handleInputChange = (e) => {
 		let name = e.target.name;
@@ -128,11 +147,11 @@ export class PresentationMain extends React.Component {
 		this.setState({ tag: tname });
 		this.props.addTag({ tag: tname }, index);
 	};
-	toggle = () => {
-		this.setState({
-			modal: !this.state.modal
-		});
-	};
+	// toggle = () => {
+	// 	this.setState({
+	// 		modal: !this.state.modal
+	// 	});
+	// };
 	dynamicSort = (property) => {
 		var sortOrder = 1;
 		if (property[0] === '-') {
@@ -214,9 +233,11 @@ export class PresentationMain extends React.Component {
 		return (
 			<div style={mainSt}>
 				<div style={hide}>
+				
 					{this.state.showAscending === true ? (changeOrder = 'DESCENDING') : (changeOrder = 'ASCENDING')}
 				</div>
 				<div>
+				<h5> {this.state.autheticated} </h5>
 					<h4 style={hSt}>Your Notes:</h4>
 					<span>
 						<h5 style={desBtn}>
@@ -305,4 +326,4 @@ const mapDispatchToProps = (state) => {
 	};
 };
 
-export default connect(mapDispatchToProps, { addNote, deleteNote, addTag, reorderState })(PresentationMain);
+export default withRouter(connect(mapDispatchToProps, { getNotesAction, createNoteAction, deleteNote,  reorderState })(PresentationMain));

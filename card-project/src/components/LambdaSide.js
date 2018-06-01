@@ -26,7 +26,7 @@ const LambdaSide = (props) => {
 					Lambda <br />Notes{' '}
 				</h1>
 			</div>
-			<Link to="/">
+			<Link to="/notes">
 				<button style={bStyle}>View Your Notes</button>
 			</Link>
 			<Link to="/notes/new">

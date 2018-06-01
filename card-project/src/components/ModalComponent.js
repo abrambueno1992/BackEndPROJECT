@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Button, Modal, ModalBody, ModalFooter } from 'reactstrap';
-import { addNote, deleteNote, addTag } from '../actions/actions';
+import { createNoteAction, deleteNote } from '../actions/actions';
 import { connect } from 'react-redux';
 
 import { Link } from 'react-router-dom';
@@ -116,7 +116,9 @@ class ModalComponent extends Component {
 			// this.props.notes[this.props.index].tag === '' ? (dval = 'none') : (dval = 'inline-flex');
 		}
 	};
-	toggle = () => {
+	toggle = (e) => {
+		console.log('Fired toggle');
+		e.preventDefault()
 		this.setState({
 			modal: !this.state.modal
 		});
@@ -142,7 +144,7 @@ class ModalComponent extends Component {
 		// 	backgroundColor: dval,
 		// 	border: '2px solid yellow'
 		// };
-
+		console.log('modal tru/false:', this.state.modal)
 		return (
 			<div>
 				{console.log('display, dval: ', dval)}
@@ -154,16 +156,13 @@ class ModalComponent extends Component {
 				<span style={ntSt}>
 					{' '}
 					<span style={{ color: dcolor }}>
-						<Link
+						{/* <Link
 							to={`#`}
-							onClick={this.toggle}
 							
-							// style={linkStyle}
-							onMouseEnter={this.toggleHover} onMouseLeave={this.toggleHover}
 						>
-							<button style={tagSt}>Tag:</button>
+						</Link> */}
+							<button onClick={this.toggle} style={tagSt} >Tag:</button>
 							{/* {console.log('any clues: ', this.props)} */}
-						</Link>
 						{/* <div style={tagSt2}> */}
 						{/* <h6 style={tagSt2}> */}
 						<span style={tagSt2}>
@@ -231,5 +230,5 @@ const mapDispatchToProps = (state) => {
 	};
 };
 
-export default connect(mapDispatchToProps, { addNote, deleteNote, addTag })(ModalComponent);
+export default connect(mapDispatchToProps, { createNoteAction, deleteNote })(ModalComponent);
 // export default

@@ -19,6 +19,7 @@ export const UPDATE_USER = 'UPDATE_USER';
 export const DELETE_NOTE = 'DELETE_NOTE';
 export const DELETE_USER = 'DELETE_USER';
 export const ERRORS = 'ERRORS';
+export const REORDER_STATE = 'REORDER_STATE';
 
 const ROOT_URL = "https://shielded-mountain-33568.herokuapp.com/api/notes/";
 
@@ -108,7 +109,7 @@ export const logoutAction = (history) => {
     };
 }
 
-export const getNotesAction = () => {
+export const getNotesAction = (history) => {
     console.log('getNotesAction, token:', localStorage.getItem('token'))
     const token = localStorage.getItem('token');
     return (dispatch) => {
@@ -132,6 +133,7 @@ export const getNotesAction = () => {
                     type: GET_NOTES_ACTION,
                     payload: resp.data
                 })
+                // history.push('/notes')
             })
             .catch(err => dispatch({ type: ERRORS }));
     }
@@ -214,13 +216,6 @@ export const deleteNote = (obj, history) => {
         };
         axios(options)
             .then(res => {
-                //     dispatch({
-                //         type: DELETE_NOTE,
-                //         // payload: res.data
-                //     })
-                //     history.push('/fetch')
-                // })
-                // .catch(err => dispatch({type: ERRORS}))
                 dispatch({
                     type: DELETE_NOTE,
                     // payload: res.data
@@ -259,6 +254,12 @@ export const deleteUser = (history) => {
 
 
 
+export const reorderState = (completeObject) => {
+    return {
+        type: REORDER_STATE,
+        payload: completeObject
+    }
+}
 
 
 
@@ -306,12 +307,6 @@ export const deleteUser = (history) => {
 //         type: ADD_TAG,
 //         payload: tag,
 //         index: i
-//     }
-// }
-// export const reorderState = (completeObject) => {
-//     return {
-//         type: REORDER_STATE,
-//         payload: completeObject
 //     }
 // }
 // export const checkUpdate = (bool, i) => {

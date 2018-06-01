@@ -1,5 +1,5 @@
 // import { ADD_NOTE,   CHECK_UPDATE, ADD_TAG, REORDER_STATE } from '../actions/actions';
-import {CREATE_NOTE, CREATE_USER,LOGOUT_ACTION, LOGIN_ACTION, GET_NOTES_ACTION, UPDATE_NOTE, UPDATE_USER, DELETE_NOTE, DELETE_USER, ERRORS} from '../actions/actions'
+import {CREATE_NOTE,REORDER_STATE, CREATE_USER,LOGOUT_ACTION, LOGIN_ACTION, GET_NOTES_ACTION, UPDATE_NOTE, UPDATE_USER, DELETE_NOTE, DELETE_USER, ERRORS} from '../actions/actions'
 
 const startState = {
 	notes: [],
@@ -107,6 +107,14 @@ export const notesReducer = (state = startState, action) => {
 		console.log('Delete user, reducer')
 		case ERRORS:
 		console.log('error, error')
+		case REORDER_STATE: 
+		return (
+			Object.assign({},state, {
+				// notes: [],
+				notes: [...action.payload]
+			})
+		
+		)
 		// case ADD_NOTE:
 		// 	console.log('ADD_NOTE REDUCER action.payload: ', action.payload);
 		// 	console.log(...action.payload);
@@ -148,15 +156,6 @@ export const notesReducer = (state = startState, action) => {
 		// 			notes: [...state.notes, state.notes[action.index].tag = action.payload],
 		// 			// notes: [...state.notes]
 		// 		})
-		// 	)
-		// 	case REORDER_STATE: 
-		// 	// console.log()
-		// 	return (
-		// 		Object.assign({},state, {
-		// 			// notes: [],
-		// 			notes: [...action.payload]
-		// 		})
-			
 		// 	)
 		default:
 			return state;

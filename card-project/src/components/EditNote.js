@@ -1,8 +1,8 @@
 import React from 'react';
 
-// import {updateNote } from '../actions/actions';
+import { updateNote } from '../actions/actions';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 
 const textarea = {
 	width: '90%',
@@ -46,25 +46,25 @@ class EditNote extends React.Component {
 			note: ''
 		};
 	}
-	
+
 	componentDidMount() {
 		this.props.notes;
-		
+
 	}
-	
+
 	handleTextInput = (e) => {
 		e.preventDefault();
 		this.setState({ [e.target.name]: e.target.value });
 	};
 	newNote = (e) => {
 		// e.preventDefault();
-		
-		const noteObject = { title: this.state.title, note: this.state.note};
-		this.props.updateNote(this.state.title, this.state.note,this.props.idE);
+
+		const noteObject = { title: this.state.title, note: this.state.note };
+		this.props.updateNote(this.state.title, this.state.note, this.props.idE);
 		this.setState({
-            title: '',
-            note: ''
-        })
+			title: '',
+			note: ''
+		})
 
 	};
 	render() {
@@ -87,7 +87,9 @@ class EditNote extends React.Component {
 					placeholder="Note Content"
 					onChange={this.handleTextInput}
 				/>
-				<Link to={`/`} onClick={this.newNote} style={bStyle}> <button  style={bStyle}>	Update</button>	</Link>
+				<Link to={`/`} onClick={this.newNote} style={bStyle}>
+					<button style={bStyle}>	Update</button>
+				</Link>
 			</div>
 		);
 	}
@@ -97,4 +99,4 @@ const mapDispatchToProps = (state) => {
 		notes: state.notes
 	};
 };
-// export default connect(mapDispatchToProps, {  updateNote })(EditNote);
+export default withRouter(connect(mapDispatchToProps, { updateNote })(EditNote));
