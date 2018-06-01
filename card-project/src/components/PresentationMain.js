@@ -1,7 +1,7 @@
 import React from 'react';
 import ModalComponent from './ModalComponent';
 import { Link } from 'react-router-dom';
-import { createNoteAction, deleteNote,  reorderState, getNotesAction } from '../actions/actions';
+import { logoutAction,   reorderState, getNotesAction } from '../actions/actions';
 import { connect } from 'react-redux';
 import {withRouter} from 'react-router-dom'
 import { Button, Modal, ModalBody, ModalFooter } from 'reactstrap';
@@ -108,9 +108,11 @@ export class PresentationMain extends React.Component {
 			modal: false,
 			list: [],
 			tag: '',
+			reload: 0,
 			showAscending: true,
 			orderTag: false,
-			autheticated: 'Authenticated, Access Granted'
+			autheticated: 'Authenticated, Access Granted',
+
 		};
 	}
 
@@ -123,9 +125,14 @@ export class PresentationMain extends React.Component {
 			this.callSet()
 			
 		} else {
-			this.setState({ autheticated: 'Not authenticated, Access Denied' })
+			this.setState({ autheticated: 'Not authenticated, Access Denied' });
+			this.props.history.push('/')
         }
 		// this.props.notes;
+		if (this.state.list.length === 0 || this.state.reload < 2) {
+			this.setState({reload: this.state.reload + 1})
+			// this.props.history.push('/notes')
+		}
 	}
 	callSet= () => {
 		// this.props.getNotesAction();
@@ -225,6 +232,9 @@ export class PresentationMain extends React.Component {
 			this.props.reorderState(originalNotes);
 		}
 	};
+	handSignout = () => {
+		this.props.logoutAction(this.props.history)
+	}
 	render() {
 		let tempVal;
 		console.log('notes length: ', this.props.notes.length);
@@ -239,6 +249,14 @@ export class PresentationMain extends React.Component {
 				<div>
 				<h5> {this.state.autheticated} </h5>
 					<h4 style={hSt}>Your Notes:</h4>
+					<span>
+						<h5 style={desBtn}>
+							{/* Order by Tag */}
+							<button style={desBtn3} onClick={this.handSignout}>
+								Logout
+							</button>
+						</h5>
+					</span>
 					<span>
 						<h5 style={desBtn}>
 							Change Order
@@ -260,13 +278,15 @@ export class PresentationMain extends React.Component {
 				{this.state.showAscending ? (
 					<div>
 						{this.state.list.map((note, i) => {
+							{console.log('the check status is:', note.check)}
 							tempVal = i;
 							{
-								note.check === false ? (dcolor = 'red') : (dcolor = 'blue');
+								note.check[0] === false ? (dcolor = 'red') : (dcolor = 'blue');
 							}
 							{
-								note.check === false ? (dcomplete = 'NOT COMPLETE') : (dcomplete = 'COMPLETED');
+								note.check[0] === false ? (dcomplete = 'NOT COMPLETE') : (dcomplete = 'COMPLETED');
 							}
+							console.log('color: dcomplete:', dcolor, dcomplete);
 							return (
 								<Link to={`/notes/view/${i}`} style={icSt} key={note + i}>
 									{' '}
@@ -289,13 +309,15 @@ export class PresentationMain extends React.Component {
 				) : (
 					<div>
 						{this.state.list.map((note, i) => {
+							{console.log('the check status is:', note.check)}
 							tempVal = i;
 							{
-								note.check === false ? (dcolor = 'red') : (dcolor = 'blue');
+								note.check[0] === false ? (dcolor = 'red') : (dcolor = 'blue');
 							}
 							{
-								note.check === false ? (dcomplete = 'NOT COMPLETE') : (dcomplete = 'COMPLETED');
+								note.check[0] === false ? (dcomplete = 'NOT COMPLETE') : (dcomplete = 'COMPLETED');
 							}
+							console.log('color: dcomplete:', dcolor, dcomplete);
 							return (
 								<Link to={`/notes/view/${i}`} style={icSt} key={note + i}>
 									{' '}
@@ -326,4 +348,4 @@ const mapDispatchToProps = (state) => {
 	};
 };
 
-export default withRouter(connect(mapDispatchToProps, { getNotesAction, createNoteAction, deleteNote,  reorderState })(PresentationMain));
+export default withRouter(connect(mapDispatchToProps, {logoutAction, getNotesAction,    reorderState })(PresentationMain));

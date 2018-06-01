@@ -49,7 +49,7 @@ export const createNoteAction = (obj, history) => {
     const data = {
         'title': obj.title,
         'note': obj.note,
-        'check': obj.check,
+        'check': false,
         'tag': obj.tag,
         '_creator': localStorage.getItem('ID')
     }
@@ -63,16 +63,16 @@ export const createNoteAction = (obj, history) => {
             url: `${ROOT_URL}create`,
         }
         axios(optionTwo)
-            .then((resp, other) => {
+            .then((resp) => {
                 // localStorage.setItem('notes', resp)
-                console.log('response of getNotes', resp.data, other)
+                console.log('response of getNotes', resp.data)
                 dispatch({
                     type: CREATE_NOTE,
                     payload: resp.data
-                })
-                history.push('/fetch')
+                });
             })
-            .catch(err => dispatch({ type: ERRORS }));
+            .catch(() => dispatch({ type: ERRORS }));
+        history.push('/notes')
     }
 }
 
@@ -89,7 +89,7 @@ export const loginAction = (obj, history) => {
                     username: res.data.username,
                     Id: res.data.Id
                 });
-                history.push('/fetch')
+                history.push('/notes')
             })
             .catch(() => {
                 localStorage.removeItem('token');
@@ -126,9 +126,9 @@ export const getNotesAction = (history) => {
         }
 
         axios(optionTwo)
-            .then((resp, other) => {
+            .then((resp) => {
                 localStorage.setItem('notes', resp.data)
-                console.log('response of getNotes', resp, other)
+                console.log('response of getNotes', resp)
                 dispatch({
                     type: GET_NOTES_ACTION,
                     payload: resp.data
@@ -153,7 +153,7 @@ export const updateNote = (obj, history) => {
         const options = {
             method: 'PUT',
             headers: { 'content-type': 'application/json', 'Authorization': token },
-            data: data,
+            data: obj,
             url: `${ROOT_URL}update`,
         }
 
@@ -163,10 +163,13 @@ export const updateNote = (obj, history) => {
                 dispatch({
                     type: UPDATE_NOTE,
                     payload: res.data
-                })
-                history.push('/fetch')
+                });
             })
-            .catch(err => dispatch({ type: ERRORS }))
+            .catch(err => dispatch({ type: ERRORS }));
+        // history.push('/notes');
+        // history.push('/');
+        history.push( '/notes');
+        // window.location.reload() 
     }
 };
 
@@ -196,7 +199,8 @@ export const updateUser = (obj, history) => {
                     type: UPDATE_USER,
                     payload: res.data
                 })
-                history.push('/login')
+                history.push('/login');
+                window.location.reload()
             })
             .catch(err => dispatch({ type: ERRORS }))
     }
@@ -211,7 +215,7 @@ export const deleteNote = (obj, history) => {
         const options = {
             method: 'DELETE',
             headers: { 'content-type': 'application/json', 'Authorization': token },
-            data: data,
+            data: obj,
             url: `${ROOT_URL}delete`,
         };
         axios(options)
@@ -220,9 +224,10 @@ export const deleteNote = (obj, history) => {
                     type: DELETE_NOTE,
                     // payload: res.data
                 })
-                history.push('/fetch')
+                history.push('/');
             })
             .catch(err => dispatch({ type: ERRORS }))
+        // window.location.reload() 
     }
 };
 export const deleteUser = (history) => {

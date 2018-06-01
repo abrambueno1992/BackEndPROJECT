@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { Button, Modal, ModalBody, ModalFooter } from 'reactstrap';
-import { createNoteAction, deleteNote } from '../actions/actions';
+import { updateNote  } from '../actions/actions';
 import { connect } from 'react-redux';
 
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 
 const icSt = {
 	display: 'inline-flex',
@@ -107,11 +107,18 @@ class ModalComponent extends Component {
 		console.log(e.target.value);
 	};
 	handleTag = (tname, index) => {
-		this.setState({ tag: tname });
-		this.props.addTag(tname, index);
 		this.setState({
 			modal: !this.state.modal
 		});
+		let IDnote = this.props.notes[index]._id;
+		this.setState({ tag: tname });
+		let tagObject = {
+			'tag': tname,
+			'Id': IDnote
+		}
+		this.props.updateNote(tagObject, this.props.history);
+		console.log('tag name, index:', tname + ' ' + index);
+		console.log('note content, ID', this.props.notes[index]._id)
 		{
 			// this.props.notes[this.props.index].tag === '' ? (dval = 'none') : (dval = 'inline-flex');
 		}
@@ -173,6 +180,7 @@ class ModalComponent extends Component {
 				</span>
 				<Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
 					{/* <ModalBody  style={aprompt} > */}
+					{console.log('This is the notes, modal:', this.props.notes)}
 					<span style={{ fontWeight: 'bold', textAlign: 'center', fontWeight: 'bold' }}>Select Tag</span>{' '}
 					{/* <Link to={`/`} onClick={() => this.handleDelete(this.props.id)}>
 							<Button color="primary" style={bStyled}>
@@ -230,5 +238,5 @@ const mapDispatchToProps = (state) => {
 	};
 };
 
-export default connect(mapDispatchToProps, { createNoteAction, deleteNote })(ModalComponent);
+export default withRouter(connect(mapDispatchToProps, { updateNote  })(ModalComponent));
 // export default

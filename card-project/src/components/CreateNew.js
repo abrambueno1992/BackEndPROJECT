@@ -1,7 +1,7 @@
 import React from 'react';
 import { createNoteAction } from '../actions/actions'
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 
 const textarea = {
     width: '90%',
@@ -64,7 +64,7 @@ class CreateNew extends React.Component {
         // this.props.addNote(this.state.note);
         // this.props.addTitle(this.state.title);
         const noteObject = { title: this.state.title, note: this.state.note, check: false, tag: this.state.tag };
-        this.props.createNoteAction(noteObject);
+        this.props.createNoteAction(noteObject, this.props.history);
         this.refresh();
         this.setState({
             title: '',
@@ -79,7 +79,9 @@ class CreateNew extends React.Component {
 				<input style={tStyle} type="text" name="title" value={this.state.title} placeholder="Note Title" onChange={this.handleTextInput} />
 				<input style={textarea} type="text" name="note"  value={this.state.note}  placeholder="Note Content" onChange={this.handleTextInput} />
                 {/* <button onClick={this.newNote} style={bStyle} ><Link to={`/`}>Save</Link></button> */}
-                <Link to={`/`} onClick={this.newNote} ><button style={bStyle} >Save</button></Link>
+                {/* <Link to={`/`}  > */}
+                <button style={bStyle} onClick={this.newNote}>Save</button>
+                {/* </Link> */}
 
 			</div>
 		);
@@ -92,4 +94,4 @@ const mapDispatchToProps = (state) => {
 	};
 };
 // export default CreateNew;
-export default connect(mapDispatchToProps, {createNoteAction })(CreateNew);
+export default withRouter(connect(mapDispatchToProps, {createNoteAction })(CreateNew));

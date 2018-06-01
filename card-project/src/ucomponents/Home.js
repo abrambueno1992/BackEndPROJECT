@@ -10,7 +10,9 @@ class Home extends React.Component {
 
     }
     componentDidMount = () => {
-
+        if (window.localStorage.getItem('token') !== null) { 
+            this.props.history.push('/notes')
+        }
     }
     render() {
         return (

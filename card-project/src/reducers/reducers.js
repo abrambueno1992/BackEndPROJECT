@@ -1,11 +1,12 @@
 // import { ADD_NOTE,   CHECK_UPDATE, ADD_TAG, REORDER_STATE } from '../actions/actions';
-import {CREATE_NOTE,REORDER_STATE, CREATE_USER,LOGOUT_ACTION, LOGIN_ACTION, GET_NOTES_ACTION, UPDATE_NOTE, UPDATE_USER, DELETE_NOTE, DELETE_USER, ERRORS} from '../actions/actions'
+import { CREATE_NOTE, REORDER_STATE, CREATE_USER, LOGOUT_ACTION, LOGIN_ACTION, GET_NOTES_ACTION, UPDATE_NOTE, UPDATE_USER, DELETE_NOTE, DELETE_USER, ERRORS } from '../actions/actions'
 
 const startState = {
 	notes: [],
 	user: [],
 	createdNotes: [],
 	updatednotes: [],
+	error: '',
 	// notes: [
 	// 	{
 	// 		title: 'Note_1',
@@ -59,62 +60,67 @@ const startState = {
 export const notesReducer = (state = startState, action) => {
 	switch (action.type) {
 		case CREATE_USER:
-		console.log('created user,reducer', action.payload, action.username);
-		return Object.assign({}, state, {
-			user: {username: action.payload.data.username, ID: action.payload.data._id}
-		});
-		case CREATE_NOTE:
-		console.log('created note, reducer');
-		return Object.assign({}, state, {
-			createdNotes: action.payload
-		})
-		case LOGIN_ACTION:
-		console.log('logged in, reducer', action.payload);
-		return Object.assign({}, state, {
-			user: {...state.user, token: action.payload, username: action.username, ID: action.Id}
-		});
-		case LOGOUT_ACTION:
-		return Object.assign({}, state, {
-			user: [],
-			notes: [],
-			createdNotes: [],
-		})
-		case GET_NOTES_ACTION:
-		console.log('get notes, reducer');
-		return Object.assign({}, state, {
-			notes: action.payload
-		})
-		case UPDATE_NOTE:
-		console.log('update note, reducer');
-		return Object.assign({}, state, {
-			updatednotes: action.payload,
-			notes: [],
-		})
-		case UPDATE_USER:
-		return Object.assign({}, state, {
-			user: []
-		})
-		console.log('Update user, reducer')
-		case DELETE_NOTE:
-		return Object.assign({}, state, {
-			notes: []
-		})
-		console.log('Delete note, reducer')
-		case DELETE_USER:
-		return Object.assign({}, state, {
-			user: []
-		})
-		console.log('Delete user, reducer')
-		case ERRORS:
-		console.log('error, error')
-		case REORDER_STATE: 
-		return (
-			Object.assign({},state, {
-				// notes: [],
+			console.log('created user,reducer', action.payload, action.username);
+			return (Object.assign({}, state, {
+				user: { username: action.payload.data.username, ID: action.payload.data._id }
+			}));
+		case REORDER_STATE:
+			return (Object.assign({}, state, {
 				notes: [...action.payload]
-			})
-		
-		)
+			}));
+		case LOGIN_ACTION:
+			console.log('logged in, reducer', action.payload);
+			return (Object.assign({}, state, {
+				user: { ...state.user, token: action.payload, username: action.username, ID: action.Id }
+			}));
+		case LOGOUT_ACTION:
+			return (Object.assign({}, state, {
+				user: [],
+				notes: [],
+				createdNotes: [],
+			}));
+		case GET_NOTES_ACTION:
+			console.log('get notes, reducer');
+			return (Object.assign({}, state, {
+				notes: action.payload
+			}));
+		case UPDATE_NOTE:
+			console.log('update note, reducer');
+			return (Object.assign({}, state, {
+				updatednotes: action.payload,
+				notes: [],
+			}));
+		case UPDATE_USER:
+			return (Object.assign({}, state, {
+				user: []
+			}));
+			console.log('Update user, reducer')
+		case DELETE_NOTE:
+			return (Object.assign({}, state, {
+				notes: []
+			}));
+			console.log('Delete note, reducer')
+		case DELETE_USER:
+			return (Object.assign({}, state, {
+				user: []
+			}));
+			console.log('Delete user, reducer')
+		case ERRORS:
+			console.log('error, error')
+			return (
+				Object.assign({}, state, {
+					error: 'Error'
+				})
+			);
+		case CREATE_NOTE:
+			console.log('created note, reducer');
+			return (Object.assign({}, state, {
+				createdNotes: action.payload
+			}));
+
+		default:
+			return state;
+
 		// case ADD_NOTE:
 		// 	console.log('ADD_NOTE REDUCER action.payload: ', action.payload);
 		// 	console.log(...action.payload);
@@ -132,9 +138,9 @@ export const notesReducer = (state = startState, action) => {
 		// 			notes: [ state.notes[action.index].note = action.payload, state.notes[action.index].title = action.title],
 		// 			notes: [...state.notes]
 		// 		})
-				
+
 		// 	)
-			
+
 		// case DELETE_NOTE:
 		// 	console.log('DELETE_NOTE REDUCER action.payload: ', action.payload);
 		// 	console.log('DELETE_NOTE REDUCER ...state.notes: ', ...state.notes);
@@ -157,7 +163,5 @@ export const notesReducer = (state = startState, action) => {
 		// 			// notes: [...state.notes]
 		// 		})
 		// 	)
-		default:
-			return state;
 	}
 };

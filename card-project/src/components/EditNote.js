@@ -57,10 +57,17 @@ class EditNote extends React.Component {
 		this.setState({ [e.target.name]: e.target.value });
 	};
 	newNote = (e) => {
-		// e.preventDefault();
-
-		const noteObject = { title: this.state.title, note: this.state.note };
-		this.props.updateNote(this.state.title, this.state.note, this.props.idE);
+		let noteID = this.props.notes[this.props.idE]._id;
+		e.preventDefault();
+		let updateContet = {
+			'title': this.state.title,
+			'note': this.state.note,
+			'Id': noteID
+		};
+		this.props.updateNote(updateContet, this.props.history);
+		console.log('Fired the update button:', this.props.notes[this.props.idE]._id)
+		// const noteObject = { title: this.state.title, note: this.state.note };
+		// this.props.updateNote(this.state.title, this.state.note, this.props.idE);
 		this.setState({
 			title: '',
 			note: ''
@@ -68,6 +75,7 @@ class EditNote extends React.Component {
 
 	};
 	render() {
+		console.log('notes in edit:', this.props.notes[this.props.idE]._id)
 		return (
 			<div style={mainSt}>
 				<h3 style={hSt}>Edit Note:</h3>

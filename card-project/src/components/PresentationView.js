@@ -1,8 +1,8 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { Button, Modal, ModalBody, ModalFooter } from 'reactstrap';
 
-import { createNoteAction, deleteNote } from '../actions/actions';
+import {  deleteNote, updateNote } from '../actions/actions';
 import { connect } from 'react-redux';
 
 const bStylec = {
@@ -85,7 +85,11 @@ class PresentationView extends React.Component {
 		});
 	}
 	handleDelete = (id) => {
-		this.props.deleteNote(this.props.notes[id]);
+		console.log('these are the notes for delete:', this.props.notes)
+		let IDnote = {
+			'Id': id
+		}
+		this.props.deleteNote(IDnote, this.props.history);
 		noteI = [];
 		titleI = [];
 		this.refresh();
@@ -93,11 +97,23 @@ class PresentationView extends React.Component {
 			modal: !this.state.modal
 		});
 	};
-	handleInputChange = (event) => {		
-		this.setState({checked: this.state.checked === false ? true : false});
-		this.setState({ccolor: this.state.ccolor === 'red' ? 'blue' : 'red' });
+	handleInputChange = (checkBoolean, id) => {	
+		// event.preventDefault();
+		let trueObj = {
+			'check': true,
+			'Id': id
+		};
+		let falseObj = {
+			'check': false,
+			'Id': id
+		}
+		// this.setState({checked: this.state.checked === false ? true : false});
+		// this.setState({ccolor: this.state.ccolor === 'red' ? 'blue' : 'red' });
+		checkBoolean === false ? this.props.updateNote(trueObj, this.props.history) : this.props.updateNote(falseObj, this.props.history);
 		// this.setState({Complete: this.state.Complete === 'NOT COMPLETE' ? 'COMPLETED' : 'NOT COMPLETE'});
-		this.props.checkUpdate(this.state.checked, this.props.id);
+		// this.props.checkUpdate(this.state.checked, this.props.id);
+		// window.location.reload() 
+
 		
 	}
 
@@ -127,17 +143,18 @@ class PresentationView extends React.Component {
 						);
 					})}
 					<div style={hide}>
-					{dcheck[this.props.id] === false ? dcolor = 'red' : dcolor = 'blue'};
-					{dcheck[this.props.id] === false ? dcomplete = 'NOT COMPLETE' : dcomplete = 'COMPLETED'};
+					{dcheck[this.props.id][0] === false ? dcolor = 'red' : dcolor = 'blue'};
+					{dcheck[this.props.id][0] === false ? dcomplete = 'NOT COMPLETE' : dcomplete = 'COMPLETED'};
 					</div>
 					<div style={noteSt}>
 						<h1>{titleI[this.props.id]}</h1>
+						{console.log('This is the ID note in the delete modal:', this.props.notes[this.props.id].check[0])}
 						<h4>Complete Status: <span style={{color : dcolor}}> {dcomplete} </span> </h4>
 							<input
 								name="checkedB"
 								type="checkbox"
-								checked={dcheck[this.props.id]}
-								onChange={this.handleInputChange}
+								checked={dcheck[this.props.id][0]}
+								onChange={() => this.handleInputChange( this.props.notes[this.props.id].check[0] ,this.props.notes[this.props.id]._id )}
 								style={inpSt}
 							/>
 						{noteI[this.props.id]}
@@ -150,7 +167,7 @@ class PresentationView extends React.Component {
 				<Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
 					<ModalBody style={warning}>Are you sure you want to delete this?</ModalBody>
 					<ModalFooter>
-						<Link to={`/`} onClick={() => this.handleDelete(this.props.id)}>
+						<Link to={`/`} onClick={() => this.handleDelete(this.props.notes[this.props.id]._id)}>
 							<Button color="primary" style={bStyled}>
 								Delete
 							</Button>
@@ -169,4 +186,4 @@ const mapDispatchToProps = (state) => {
 		notes: state.notes
 	};
 };
-export default connect(mapDispatchToProps, { createNoteAction, deleteNote })(PresentationView);
+export default withRouter(connect(mapDispatchToProps, {  deleteNote, updateNote })(PresentationView));
