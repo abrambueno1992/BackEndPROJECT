@@ -53,7 +53,6 @@ export const createNoteAction = (obj, history) => {
         'tag': obj.tag,
         '_creator': localStorage.getItem('ID')
     }
-    console.log('data in created noteAction:', data)
     return (dispatch) => {
         const token = localStorage.getItem('token');
         const optionTwo = {
@@ -64,8 +63,6 @@ export const createNoteAction = (obj, history) => {
         }
         axios(optionTwo)
             .then((resp) => {
-                // localStorage.setItem('notes', resp)
-                console.log('response of getNotes', resp.data)
                 dispatch({
                     type: CREATE_NOTE,
                     payload: resp.data
@@ -110,7 +107,6 @@ export const logoutAction = (history) => {
 }
 
 export const getNotesAction = (history) => {
-    console.log('getNotesAction, token:', localStorage.getItem('token'))
     const token = localStorage.getItem('token');
     return (dispatch) => {
         const data = {
@@ -128,12 +124,10 @@ export const getNotesAction = (history) => {
         axios(optionTwo)
             .then((resp) => {
                 localStorage.setItem('notes', resp.data)
-                console.log('response of getNotes', resp)
                 dispatch({
                     type: GET_NOTES_ACTION,
                     payload: resp.data
                 })
-                // history.push('/notes')
             })
             .catch(err => dispatch({ type: ERRORS }));
     }
@@ -148,7 +142,6 @@ export const updateNote = (obj, history) => {
             'check': obj.check,
             'tag': obj.tag,
             'Id': '5b104d1826c49f0004eda91b'
-            //localStorage.getItem('ID')
         };
         const options = {
             method: 'PUT',
@@ -164,12 +157,12 @@ export const updateNote = (obj, history) => {
                     type: UPDATE_NOTE,
                     payload: res.data
                 });
+
+                history.push('/notes')
+
             })
             .catch(err => dispatch({ type: ERRORS }));
-        // history.push('/notes');
-        // history.push('/');
-        history.push( '/notes');
-        // window.location.reload() 
+
     }
 };
 
@@ -200,9 +193,11 @@ export const updateUser = (obj, history) => {
                     payload: res.data
                 })
                 history.push('/login');
-                window.location.reload()
+
+
             })
             .catch(err => dispatch({ type: ERRORS }))
+
     }
 };
 export const deleteNote = (obj, history) => {
@@ -222,12 +217,10 @@ export const deleteNote = (obj, history) => {
             .then(res => {
                 dispatch({
                     type: DELETE_NOTE,
-                    // payload: res.data
                 })
                 history.push('/');
             })
             .catch(err => dispatch({ type: ERRORS }))
-        // window.location.reload() 
     }
 };
 export const deleteUser = (history) => {
@@ -291,39 +284,3 @@ export const reorderState = (completeObject) => {
 
 
 
-
-//  export const addNote = (note) => {
-//      return {
-//          type: ADD_NOTE,
-//          payload: note
-//      }
-//  };
-//  export const updateNote = (noteTitle, noteContent, i) => {
-//     return {
-//         type: UPDATE_NOTE,
-//         title: noteTitle,
-//         payload: noteContent,
-//         index: i
-//     }
-// };
-// export const addTag = (tag, i) => {
-//     console.log('Inside addTag action... tag, i:',tag,i);
-//     return {
-//         type: ADD_TAG,
-//         payload: tag,
-//         index: i
-//     }
-// }
-// export const checkUpdate = (bool, i) => {
-//     return {
-//         type: CHECK_UPDATE,
-//         payload: bool,
-//         index: i
-//     }
-// }
-//  export const deleteNote = (note) => {
-//      return {
-//          type: DELETE_NOTE,
-//          payload: note
-//      }
-//  }

@@ -17,7 +17,6 @@ class UpdateUser extends React.Component {
     handleInput = e => {
         e.preventDefault();
         const { name, value } = e.target;
-        console.log('name,value:', name + ' ' + value)
         this.setState({ [name]: value })
     };
     checkCredentials = () => {

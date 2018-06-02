@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Button, Modal, ModalBody, ModalFooter } from 'reactstrap';
-import { updateNote  } from '../actions/actions';
+import { updateNote } from '../actions/actions';
 import { connect } from 'react-redux';
 
 import { Link, withRouter } from 'react-router-dom';
@@ -21,7 +21,6 @@ const icSt = {
 };
 const hSt = {
 	fontWeight: 'bold',
-	// marginLeft: '3%'?
 	marginTop: 10
 };
 const mainSt = {
@@ -33,31 +32,22 @@ const ntSt = {
 	width: '100%',
 	paddingBottom: 8,
 	borderBottom: '1px solid gray'
-	// fontWeight: 'bold',
-	// fontSize: 20
+
 };
 let dval = 'beige';
 
 let tagSt = {
 	cursor: 'context-menu',
-	// display: 'inline-flex',
 	color: 'black',
-	// hover: {backgroundColor: 'red'},
-	// marginLeft: '2%',
-	// paddingLeft: 4,
-	// paddingRight: 4,
 	backgroundColor: dval,
-	// border: '2px solid yellow'
 };
 let tagSt2 = {
 	cursor: 'crosshair',
 	display: 'inline-flex',
 	fontWeight: 'bold',
 	fontSize: 18,
-	// display: dval,
 	marginLeft: 20,
-	// color: 'black',
-	// color: this.props.color,
+
 	paddingLeft: 15,
 	paddingRight: 15,
 	backgroundColor: 'beige',
@@ -68,7 +58,6 @@ const aprompt = {
 	padding: 100
 };
 const iStyle = {
-	// marginLeft: 60,
 	marginTop: 10
 };
 let tempVal;
@@ -76,8 +65,7 @@ let linkStyle = {
 	cursor: 'context-menu',
 	display: 'inline-flex',
 	color: 'black',
-	// hover: {backgroundColor: 'red'},
-	// marginLeft: '2%',
+
 	paddingLeft: 2,
 	paddingRight: 2,
 	backgroundColor: 'beige',
@@ -97,14 +85,14 @@ class ModalComponent extends Component {
 		};
 	}
 	componentDidMount() {
+		this.forceUpdate()
 		this.props.notes;
 	}
 	handleInputChange = (e) => {
 		let name = e.target.name;
 		this.setState({ [e.target.name]: e.target.value });
 
-		console.log(e.target.name);
-		console.log(e.target.value);
+
 	};
 	handleTag = (tname, index) => {
 		this.setState({
@@ -117,77 +105,43 @@ class ModalComponent extends Component {
 			'Id': IDnote
 		}
 		this.props.updateNote(tagObject, this.props.history);
-		console.log('tag name, index:', tname + ' ' + index);
-		console.log('note content, ID', this.props.notes[index]._id)
-		{
-			// this.props.notes[this.props.index].tag === '' ? (dval = 'none') : (dval = 'inline-flex');
-		}
+		this.props.callNotes();
+
+
 	};
 	toggle = (e) => {
-		console.log('Fired toggle');
 		e.preventDefault()
 		this.setState({
 			modal: !this.state.modal
 		});
-		
+
 		if (this.state.hover) {
-			dval =  'red' ;
+			dval = 'red';
 		} else {
 			(' ');
 		}
 		{
-			dval =  'beige' ;
+			dval = 'beige';
 		}
 	};
 	render() {
-		// tagSt = {
-		// 	cursor: 'context-menu',
-		// 	display: 'inline-flex',
-		// 	color: 'black',
-		// 	// hover: {backgroundColor: 'red'},
-		// 	// marginLeft: '2%',
-		// 	paddingLeft: 2,
-		// 	paddingRight: 2,
-		// 	backgroundColor: dval,
-		// 	border: '2px solid yellow'
-		// };
-		console.log('modal tru/false:', this.state.modal)
+
 		return (
 			<div>
-				{console.log('display, dval: ', dval)}
 
-				{/* {
-			this.props.notes[this.props.index].tag === "" ? dval = 'none' : dval = 'inline-flex'
-        } */}
-				{/* {console.log('THIS IS THE CURRENT TAG, this.props.notes.tag: ', this.props.notes[this.props.index].tag)} */}
 				<span style={ntSt}>
-					{' '}
 					<span style={{ color: dcolor }}>
-						{/* <Link
-							to={`#`}
-							
-						>
-						</Link> */}
-							<button onClick={this.toggle} style={tagSt} >Tag:</button>
-							{/* {console.log('any clues: ', this.props)} */}
-						{/* <div style={tagSt2}> */}
-						{/* <h6 style={tagSt2}> */}
+
+						<button onClick={this.toggle} style={tagSt} >Tag:</button>
+
 						<span style={tagSt2}>
 							<span style={{ color: this.props.color }}> {this.props.notes[this.props.index].tag}</span>
 						</span>
-						{/* </div> */}
 					</span>
 				</span>
 				<Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
-					{/* <ModalBody  style={aprompt} > */}
-					{console.log('This is the notes, modal:', this.props.notes)}
 					<span style={{ fontWeight: 'bold', textAlign: 'center', fontWeight: 'bold' }}>Select Tag</span>{' '}
-					{/* <Link to={`/`} onClick={() => this.handleDelete(this.props.id)}>
-							<Button color="primary" style={bStyled}>
-								Delete
-							</Button>
-						</Link> */}
-					{/* <Link to={`/`} */}
+
 					<Button color="primary" style={hSt} onClick={() => this.handleTag('To-Do', `${this.props.index}`)}>
 						To-Do
 					</Button>
@@ -218,7 +172,6 @@ class ModalComponent extends Component {
 								name="tag"
 							/>
 						</label>
-						{/* {console.log('inside of presentationMain, props: ', this.props)} */}
 						<Button
 							style={{ marginLeft: 10 }}
 							color="primary"
@@ -238,5 +191,4 @@ const mapDispatchToProps = (state) => {
 	};
 };
 
-export default withRouter(connect(mapDispatchToProps, { updateNote  })(ModalComponent));
-// export default
+export default withRouter(connect(mapDispatchToProps, { updateNote })(ModalComponent));

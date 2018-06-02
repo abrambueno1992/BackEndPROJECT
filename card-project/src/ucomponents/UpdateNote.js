@@ -19,7 +19,6 @@ class UpdateNote extends React.Component {
     handleInput = e => {
         e.preventDefault();
         const { name, value } = e.target;
-        console.log('name,value:', name + ' ' + value)
         this.setState({ [name]: value })
     };
     handleSubmit = () => {
@@ -27,7 +26,6 @@ class UpdateNote extends React.Component {
     }
     handleDelete = () => {
         this.props.deleteNote("", this.props.history)
-        //Make sure this.state is replaced with the ID of the note
     }
     render() {
         return (

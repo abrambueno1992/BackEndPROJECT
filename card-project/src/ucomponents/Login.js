@@ -15,7 +15,6 @@ class Login extends React.Component {
     handleInput = e => {
         e.preventDefault()
         const { name, value } = e.target;;
-        // console.log('username, password', name, value)
         this.setState({ [name]: value })
     };
     handleSubmit = () => {
@@ -50,5 +49,4 @@ class Login extends React.Component {
 const mapStateToProps = state => {
     user: state.user
 }
-// export default Login
 export default connect(mapStateToProps, {loginAction})(Login)

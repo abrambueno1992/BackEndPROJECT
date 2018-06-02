@@ -39,7 +39,6 @@ class CreateUser extends React.Component {
         e.preventDefault();
         // let valued = e.targe.value;
         const { name, value } = e.target;
-        console.log('name,value', name, value)
         this.setState({ [name]: value });
     }
     render() {

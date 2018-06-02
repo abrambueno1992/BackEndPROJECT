@@ -65,17 +65,16 @@ class EditNote extends React.Component {
 			'Id': noteID
 		};
 		this.props.updateNote(updateContet, this.props.history);
-		console.log('Fired the update button:', this.props.notes[this.props.idE]._id)
 		// const noteObject = { title: this.state.title, note: this.state.note };
 		// this.props.updateNote(this.state.title, this.state.note, this.props.idE);
 		this.setState({
 			title: '',
 			note: ''
 		})
+		this.props.history.push('/notes')
 
 	};
 	render() {
-		console.log('notes in edit:', this.props.notes[this.props.idE]._id)
 		return (
 			<div style={mainSt}>
 				<h3 style={hSt}>Edit Note:</h3>

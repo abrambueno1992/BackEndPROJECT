@@ -20,7 +20,6 @@ class CreateNote extends React.Component {
     }
     handleInput = (e) => {
      const   {name, value} = e.target;
-     console.log('name, value', name + " "+ value)
      this.setState({[name]: value})
     }
     render() {

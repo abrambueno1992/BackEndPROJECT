@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { Button, Modal, ModalBody, ModalFooter } from 'reactstrap';
 
-import {  deleteNote, updateNote } from '../actions/actions';
+import {  deleteNote, updateNote, getNotesAction } from '../actions/actions';
 import { connect } from 'react-redux';
 
 const bStylec = {
@@ -75,7 +75,9 @@ class PresentationView extends React.Component {
 		this.refresh();
 	}
 	refresh = () => {
+		this.props.getNotesAction();
 		this.props.notes;
+		this.setState({list: this.props.notes})
 	};
 
 	toggle = (e) => {
@@ -85,7 +87,6 @@ class PresentationView extends React.Component {
 		});
 	}
 	handleDelete = (id) => {
-		console.log('these are the notes for delete:', this.props.notes)
 		let IDnote = {
 			'Id': id
 		}
@@ -96,6 +97,7 @@ class PresentationView extends React.Component {
 		this.setState({
 			modal: !this.state.modal
 		});
+		this.props.history.push('/notes')
 	};
 	handleInputChange = (checkBoolean, id) => {	
 		// event.preventDefault();
@@ -111,6 +113,8 @@ class PresentationView extends React.Component {
 		// this.setState({ccolor: this.state.ccolor === 'red' ? 'blue' : 'red' });
 		checkBoolean === false ? this.props.updateNote(trueObj, this.props.history) : this.props.updateNote(falseObj, this.props.history);
 		// this.setState({Complete: this.state.Complete === 'NOT COMPLETE' ? 'COMPLETED' : 'NOT COMPLETE'});
+		// this.props.getNotesAction();
+		this.props.history.push('/notes')
 		// this.props.checkUpdate(this.state.checked, this.props.id);
 		// window.location.reload() 
 
@@ -148,7 +152,6 @@ class PresentationView extends React.Component {
 					</div>
 					<div style={noteSt}>
 						<h1>{titleI[this.props.id]}</h1>
-						{console.log('This is the ID note in the delete modal:', this.props.notes[this.props.id].check[0])}
 						<h4>Complete Status: <span style={{color : dcolor}}> {dcomplete} </span> </h4>
 							<input
 								name="checkedB"
@@ -168,7 +171,7 @@ class PresentationView extends React.Component {
 					<ModalBody style={warning}>Are you sure you want to delete this?</ModalBody>
 					<ModalFooter>
 						<Link to={`/`} onClick={() => this.handleDelete(this.props.notes[this.props.id]._id)}>
-							<Button color="primary" style={bStyled}>
+							<Button color="primary" style={bStyled} onClick={() => this.handleDelete(this.props.notes[this.props.id]._id)}>
 								Delete
 							</Button>
 						</Link>
@@ -186,4 +189,4 @@ const mapDispatchToProps = (state) => {
 		notes: state.notes
 	};
 };
-export default withRouter(connect(mapDispatchToProps, {  deleteNote, updateNote })(PresentationView));
+export default withRouter(connect(mapDispatchToProps, {  deleteNote, updateNote, getNotesAction })(PresentationView));

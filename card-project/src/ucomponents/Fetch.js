@@ -11,7 +11,6 @@ class Fetch extends React.Component {
         }
     };
     componentDidMount = () => {
-        console.log('this is in storage', localStorage.getItem('token'))
         if (localStorage.getItem('token') !== null && localStorage.getItem('ID') !== null) {
             this.props.getNotesAction();
 
@@ -19,9 +18,7 @@ class Fetch extends React.Component {
         } else {
             this.setState({ autheticated: 'Not authenticated, Access Denied' })
         }
-        // console.log('fetch component, token:',window.localStorage.getItem('token'))
-        // let ndata = window.localStorage.getItem('notes')
-        // this.setState({notes: ndata})
+   
     }
     handleFetch = () => {
         this.props.getNotesAction();
@@ -30,7 +27,6 @@ class Fetch extends React.Component {
         this.props.logoutAction(this.props.history);
     }
     render() {
-        console.log('The notes are:', this.props.notes)
         return (
 
             <div>
