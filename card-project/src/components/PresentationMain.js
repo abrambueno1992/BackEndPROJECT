@@ -86,6 +86,12 @@ export class PresentationMain extends React.Component {
 		super(props);
 		
 	}
+	componentWillUpdate = (nextProps) => {
+	  if (this.props.notes.id != nextProps.notes.id) {
+		  this.setState({notes: Object.assign({}, nextProps.notes)});
+	  }
+	}
+	
 	componentWillMount = () => {
 		this.props.getNotesAction(this.props.history)
 		

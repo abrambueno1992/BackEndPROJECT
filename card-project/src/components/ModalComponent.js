@@ -84,6 +84,11 @@ class ModalComponent extends Component {
 			hover: false
 		};
 	}
+	componentWillUpdate = (nextProps) => {
+		if (this.props.notes.id != nextProps.notes.id) {
+			this.setState({notes: Object.assign({}, nextProps.notes)});
+		}
+	  }
 	componentDidMount() {
 		this.forceUpdate()
 		this.props.notes;

@@ -64,20 +64,32 @@ class PresentationView extends React.Component {
 		super(props);
 		this.state = {
 			modal: false,
-			list: this.props.notes,
+			list: [],
 			checked: true,
 			Complete: 'NOT COMPLETE',
 			ccolor : 'red',
 		};
 		// this.toggle = this.toggle.bind(this);
 	}
+	componentWillUpdate = (nextProps) => {
+		if (this.props.notes.id != nextProps.notes.id) {
+			console.log("NOT EQUAL TO component will update", this.props.notes);
+			this.setState({notes: Object.assign({}, nextProps.notes)});
+		}
+		console.log("component will update", this.props.notes);
+	  }
 	componentDidMount() {
-		this.refresh();
+		// this.props.history.push('/notes')
+		// this.props.history.push(`/notes/view/${this.props.match.params.id}`)
+		// this.refresh();
+		this.props.getNotesAction(this.props.history);
+		// this.props.history.push('/notes')
+		// this.props.history.push(`/notes/view/${this.props.match.params.id}`)
+		this.setState({list: this.props.notes})
 	}
 	refresh = () => {
-		this.props.getNotesAction();
 		this.props.notes;
-		this.setState({list: this.props.notes})
+		// this.forceUpdate()
 	};
 
 	toggle = (e) => {
@@ -126,6 +138,7 @@ class PresentationView extends React.Component {
 		titleI = [];
 		dcheck = [];
 		dcomplete = '';
+		// console.log(this.props.match.params.id)
 		return (
 			<div>
 				<div>
@@ -147,20 +160,20 @@ class PresentationView extends React.Component {
 						);
 					})}
 					<div style={hide}>
-					{dcheck[this.props.id][0] === false ? dcolor = 'red' : dcolor = 'blue'};
-					{dcheck[this.props.id][0] === false ? dcomplete = 'NOT COMPLETE' : dcomplete = 'COMPLETED'};
+					{dcheck[this.props.match.params.id][0] === false ? dcolor = 'red' : dcolor = 'blue'};
+					{dcheck[this.props.match.params.id][0] === false ? dcomplete = 'NOT COMPLETE' : dcomplete = 'COMPLETED'};
 					</div>
 					<div style={noteSt}>
-						<h1>{titleI[this.props.id]}</h1>
+						<h1>{titleI[this.props.match.params.id]}</h1>
 						<h4>Complete Status: <span style={{color : dcolor}}> {dcomplete} </span> </h4>
 							<input
 								name="checkedB"
 								type="checkbox"
-								checked={dcheck[this.props.id][0]}
-								onChange={() => this.handleInputChange( this.props.notes[this.props.id].check[0] ,this.props.notes[this.props.id]._id )}
+								checked={dcheck[this.props.match.params.id][0]}
+								onChange={() => this.handleInputChange( this.props.notes[this.props.match.params.id].check[0] ,this.props.notes[this.props.match.params.id]._id )}
 								style={inpSt}
 							/>
-						{noteI[this.props.id]}
+						{noteI[this.props.match.params.id]}
 						<label>
 
 						</label>
@@ -184,7 +197,14 @@ class PresentationView extends React.Component {
 		);
 	}
 }
-const mapDispatchToProps = (state) => {
+const mapDispatchToProps = (state, ownProps) => {
+	const noteId = ownProps.params;
+	if (noteId) {
+		console.log("This is mapStateToPRops, noteId", noteId);
+	}
+	if (!noteId) {
+		console.log("noteId not defined")
+	}
 	return {
 		notes: state.notes
 	};

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import qs from 'qs'
+import qs from 'qs';
 // export const ADD_NOTE = 'ADD_NOTE';
 // export const DELETE_NOTE = 'DELETE_NOTE';
 // export const UPDATE_NOTE = 'UPDATE_NOTE';
@@ -119,6 +119,32 @@ export const getNotesAction = (history) => {
             headers: { 'content-type': 'application/json', 'Authorization': token },
             data: data,
             url: `${ROOT_URL}get`,
+        }
+
+        axios(optionTwo)
+            .then((resp) => {
+                localStorage.setItem('notes', resp.data)
+                dispatch({
+                    type: GET_NOTES_ACTION,
+                    payload: resp.data
+                })
+            })
+            .catch(err => dispatch({ type: ERRORS }));
+    }
+};
+export const getNotesFromView = (history) => {
+    const token = localStorage.getItem('token');
+    return (dispatch) => {
+        const data = {
+
+            'Id': localStorage.getItem('ID')
+        }
+
+        const optionTwo = {
+            method: 'POST',
+            headers: { 'content-type': 'application/json', 'Authorization': token },
+            data: data,
+            url: `${ROOT_URL}view/:id`,
         }
 
         axios(optionTwo)
