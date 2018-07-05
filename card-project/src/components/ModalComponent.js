@@ -1,32 +1,16 @@
 import React, { Component } from 'react';
-import { Button, Modal, ModalBody, ModalFooter } from 'reactstrap';
+import { Button, Modal } from 'reactstrap';
 import { updateNote } from '../actions/actions';
 import { connect } from 'react-redux';
 
-import { Link, withRouter } from 'react-router-dom';
+import {  withRouter } from 'react-router-dom';
 
-const icSt = {
-	display: 'inline-flex',
-	backgroundColor: 'white',
-	width: '22%',
-	marginLeft: '3%',
-	marginRight: '3%',
-	border: '1px solid gray',
-	padding: 10,
-	height: 200,
-	cursor: 'pointer',
-	marginTop: 10,
-	marginBottom: 10,
-	overflow: 'hidden'
-};
+
 const hSt = {
 	fontWeight: 'bold',
 	marginTop: 10
 };
-const mainSt = {
-	marginLeft: '2%',
-	paddingTop: 50
-};
+
 const ntSt = {
 	display: 'inline-flex',
 	width: '100%',
@@ -53,26 +37,12 @@ let tagSt2 = {
 	backgroundColor: 'beige',
 	border: '2px solid yellow'
 };
-const aprompt = {
-	width: '400%',
-	padding: 100
-};
+
 const iStyle = {
 	marginTop: 10
 };
-let tempVal;
-let linkStyle = {
-	cursor: 'context-menu',
-	display: 'inline-flex',
-	color: 'black',
 
-	paddingLeft: 2,
-	paddingRight: 2,
-	backgroundColor: 'beige',
-	border: '2px solid yellow'
-};
 let dcolor = 'red';
-let dcomplete = 'NOT COMPLETE';
 class ModalComponent extends Component {
 	constructor(props) {
 		super(props);
@@ -85,7 +55,7 @@ class ModalComponent extends Component {
 		};
 	}
 	componentWillUpdate = (nextProps) => {
-		if (this.props.notes.id != nextProps.notes.id) {
+		if (this.props.notes.id !== nextProps.notes.id) {
 			this.setState({notes: Object.assign({}, nextProps.notes)});
 		}
 	  }
@@ -94,7 +64,6 @@ class ModalComponent extends Component {
 		this.props.notes;
 	}
 	handleInputChange = (e) => {
-		let name = e.target.name;
 		this.setState({ [e.target.name]: e.target.value });
 
 
@@ -145,7 +114,7 @@ class ModalComponent extends Component {
 					</span>
 				</span>
 				<Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
-					<span style={{ fontWeight: 'bold', textAlign: 'center', fontWeight: 'bold' }}>Select Tag</span>{' '}
+					<span style={{ fontWeight: 'bold', textAlign: 'center' }}>Select Tag</span>{' '}
 
 					<Button color="primary" style={hSt} onClick={() => this.handleTag('To-Do', `${this.props.index}`)}>
 						To-Do

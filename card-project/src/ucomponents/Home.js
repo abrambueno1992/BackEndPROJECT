@@ -1,8 +1,11 @@
 import React from 'react';
-import { Link, Route } from 'react-router-dom';
-import CreateUser from './CreateUser'
+import { Link} from 'react-router-dom';
 const mainStyle = {
     textAlign: 'center',
+}
+const stlog = {
+    marginBottom: 35,
+    marginTop: 35
 }
 class Home extends React.Component {
     constructor(props) {
@@ -10,25 +13,28 @@ class Home extends React.Component {
 
     }
     componentDidMount = () => {
-        if (window.localStorage.getItem('token') !== null) { 
+        if (window.localStorage.getItem('token') !== null) {
             this.props.history.push('/notes')
         }
     }
     render() {
         return (
             <div style={mainStyle}>
-            
-                <href />
+
                 <h1>Welcome to Lambda Notes </h1>
-                <h3>New User ?</h3>
-                <Link to="/usercreate" >
-                    <button>Create User</button>
-                </Link >
+                <div style={stlog} >
+                    <h3>Returning User, please login.</h3>
+                    <Link to="/login" >
+                        <button>Log In</button>
+                    </Link>
+                </div>
                 <div>
-                <h3>Returning User ?</h3>
-                <Link to="/login" >
-                    <button>Log In</button>
-                </Link>
+                    <h3>New User ?</h3>
+                    <Link to="/usercreate" >
+                        <button>Create User</button>
+                    </Link >
+                </div>
+                <div>
                 </div>
 
             </div>

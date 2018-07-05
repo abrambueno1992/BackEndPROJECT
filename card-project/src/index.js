@@ -9,7 +9,6 @@ import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import Home from './ucomponents/Home'
 import { notesReducer } from './reducers/reducers';
-import Routes from './ucomponents/Routes';
 import CreateUser from './ucomponents/CreateUser';
 import Login from './ucomponents/Login';
 import Fetch from './ucomponents/Fetch';
@@ -115,7 +114,9 @@ const LambdaNewR = (props) => {
 
 const store = createStore(notesReducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(), applyMiddleware(thunk));
 const RouTING = () => {
+	// if (this.props.history.push('/'))
 	return (
+
 		<div>
 			<Route path="/" exact component={withRouter(Home)} />
 			<Route path="/usercreate" exact component={withRouter(CreateUser)} />
@@ -131,6 +132,7 @@ const RouTING = () => {
 			<Route exact path="/notes/view/delete/:idE" component={withRouter(Delete)} />
 		</div>);
 }
+
 
 ReactDOM.render(
 

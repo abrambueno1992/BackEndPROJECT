@@ -6,6 +6,8 @@ const bStyle = {
 	fontSize: 20,
 	marginBottom: 10,
 	backgroundColor: '#25b8bd',
+	// backgroundColor: 'red',
+
 	cursor: 'pointer',
 	width: '85%',
 	color: 'white',
@@ -14,6 +16,7 @@ const bStyle = {
 };
 const mSt = {
 	marginLeft: '7.5%'
+	// height: '2000px'
 };
 const hSt = {
 	fontWeight: 'bold'

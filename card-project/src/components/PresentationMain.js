@@ -1,93 +1,27 @@
 import React from 'react';
-import ModalComponent from './ModalComponent';
 import { logoutAction, reorderState, getNotesAction } from '../actions/actions';
 import { connect } from 'react-redux';
-import { withRouter, Link } from 'react-router-dom'
-import { Button, Modal, ModalBody, ModalFooter } from 'reactstrap';
+import { withRouter } from 'react-router-dom'
 import Presentation from './Presentation';
 
 
-const icSt = {
-	display: 'inline-flex',
-	backgroundColor: 'white',
-	width: '22%',
-	marginLeft: '3%',
-	marginRight: '3%',
-	border: '1px solid gray',
-	padding: 10,
-	height: 200,
-	cursor: 'pointer',
-	marginTop: 10,
-	marginBottom: 10,
-	overflow: 'hidden'
-};
-const hSt = {
-	fontWeight: 'bold',
-	marginLeft: '3%',
-	marginTop: 10,
-	display: 'inline-flex'
-};
+
+
 const mainSt = {
 	marginLeft: '2%',
 	paddingTop: 50
 };
-const ntSt = {
-	display: 'inline-flex',
-	width: '100%',
-	paddingBottom: 8,
-	fontWeight: 'bold',
-	fontSize: 20
-};
-const tagSt = {
-	cursor: 'context-menu',
-	marginLeft: 20,
-	paddingLeft: 10,
-	paddingRight: 10,
-	backgroundColor: 'beige',
-	border: '2px solid yellow'
-};
-const aprompt = {
-	width: '400%',
-	padding: 100
-};
-const iStyle = {
-	marginTop: 10
-};
-const noteStyle = {
-	
-	margin: 10
-	
-};
-const desBtn = {
-	marginLeft: '54%',
-	color: 'black',
-	fontWeight: 'bold',
 
-	marginRight: 0
-};
-const desBtn2 = {
-	marginLeft: '3%',
-	cursor: 'pointer'
-};
-const desBtn3 = {
-	marginLeft: '4%',
-	cursor: 'pointer'
-};
-let tempVal;
-const hide = {
-	display: 'none'
-};
-let dcolor = 'red';
-let dcomplete = 'NOT COMPLETE';
-let changeOrder = 'Descending';
-let originalNotes;
 export class PresentationMain extends React.Component {
 	constructor(props) {
 		super(props);
+		this.state = {
+			notes: []
+		}
 		
 	}
 	componentWillUpdate = (nextProps) => {
-	  if (this.props.notes.id != nextProps.notes.id) {
+	  if (this.props.notes !== nextProps.notes) {
 		  this.setState({notes: Object.assign({}, nextProps.notes)});
 	  }
 	}
@@ -110,17 +44,55 @@ export class PresentationMain extends React.Component {
 	}
 
 
-	
+	refresh = () => {
+		this.props.notes;
+		// this.forceUpdate()
+	};
+
+	toggle = (e) => {
+		e.preventDefault();
+		this.setState({
+			modal: !this.state.modal
+		});
+	}
+	handleDelete = (id) => {
+		let IDnote = {
+			'Id': id
+		}
+		this.props.deleteNote(IDnote, this.props.history);
+		this.refresh();
+		this.setState({
+			modal: !this.state.modal
+		});
+		this.props.history.push('/notes')
+	};
+	handleInputChange = (checkBoolean, id) => {	
+		// event.preventDefault();
+		let trueObj = {
+			'check': true,
+			'Id': id
+		};
+		let falseObj = {
+			'check': false,
+			'Id': id
+		}
+		// this.setState({checked: this.state.checked === false ? true : false});
+		// this.setState({ccolor: this.state.ccolor === 'red' ? 'blue' : 'red' });
+		checkBoolean === false ? this.props.updateNote(trueObj, this.props.history) : this.props.updateNote(falseObj, this.props.history);
+		// this.setState({Complete: this.state.Complete === 'NOT COMPLETE' ? 'COMPLETED' : 'NOT COMPLETE'});
+		// this.props.getNotesAction();
+		this.props.history.push('/notes')
+		// this.props.checkUpdate(this.state.checked, this.props.id);
+		// window.location.reload() 
+
+		
+	}
 	
 	render() {
-		let tempVal;
 	
-		let descI = this.props.notes.length;
 		return (
 			<div style={mainSt}>
-				
 				<Presentation ndata={this.props.notes} />
-			
 			</div>
 		);
 	}

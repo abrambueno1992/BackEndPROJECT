@@ -3,7 +3,6 @@ import ModalComponent from './ModalComponent';
 import { logoutAction, reorderState, getNotesAction } from '../actions/actions';
 import { connect } from 'react-redux';
 import { withRouter, Link } from 'react-router-dom'
-import { Button, Modal, ModalBody, ModalFooter } from 'reactstrap';
 
 const icSt = {
     display: 'inline-flex',
@@ -25,10 +24,7 @@ const hSt = {
     marginTop: 10,
     display: 'inline-flex'
 };
-const mainSt = {
-    marginLeft: '2%',
-    paddingTop: 50
-};
+
 const ntSt = {
     display: 'inline-flex',
     width: '100%',
@@ -36,42 +32,55 @@ const ntSt = {
     fontWeight: 'bold',
     fontSize: 20
 };
-const tagSt = {
-    cursor: 'context-menu',
-    marginLeft: 20,
-    paddingLeft: 10,
-    paddingRight: 10,
-    backgroundColor: 'beige',
-    border: '2px solid yellow'
-};
-const aprompt = {
-    width: '400%',
-    padding: 100
-};
-const iStyle = {
-    // marginLeft: 60,
-    marginTop: 10
-};
+
+
+
 const noteStyle = {
 
     margin: 10
 
 };
 const desBtn = {
-    marginLeft: '54%',
     color: 'black',
+    // marginRight: 0
+    // padding: 5,
+    // cursor: 'pointer'
     fontWeight: 'bold',
-    marginRight: 0
+    marginLeft: '60%',
+    marginTop: 10,
+    // display: 'inline-flex'
 };
 const desBtn2 = {
-    marginLeft: '3%',
-    cursor: 'pointer'
+    // marginLeft: '3%',
+    cursor: 'pointer',
+    padding: 5,
+    // cursor: 'pointer'
+    fontWeight: 'bold',
+    marginLeft: '7%',
+    marginTop: 10,
+    display: 'inline-flex'
 };
 const desBtn3 = {
-    marginLeft: '4%',
-    cursor: 'pointer'
+    // marginLeft: '4%',
+    cursor: 'pointer',
+    padding: 5,
+    // cursor: 'pointer'
+    fontWeight: 'bold',
+    marginLeft: '7%',
+    marginTop: 10,
+    display: 'inline-flex'
 };
-let tempVal;
+const desBtnLogout = {
+    // marginLeft: '32%',
+    padding: 5,
+    cursor: 'pointer',
+    fontWeight: 'bold',
+    color: 'red',
+    marginLeft: '38%',
+    // marginTop: 10,
+    marginBottom: 10,
+    display: 'inline-flex'
+}
 const hide = {
     display: 'none'
 };
@@ -98,7 +107,6 @@ class Presentation extends React.Component {
 
 
     handleInputChange = (e) => {
-        let name = e.target.name;
         this.setState({ [e.target.name]: e.target.value });
 
 
@@ -191,7 +199,7 @@ class Presentation extends React.Component {
                     <h4 style={hSt}>Your Notes: {localStorage.getItem('username')} </h4>
                     <span>
                         <h5 style={desBtn}>
-                            <button style={desBtn3} onClick={this.handSignout}>
+                            <button style={desBtnLogout} onClick={this.handSignout}>
                                 Logout
 							</button>
                         </h5>
@@ -216,7 +224,6 @@ class Presentation extends React.Component {
                 {this.state.showAscending ? (
                     <div>
                         {this.props.ndata.map((note, i) => {
-                            tempVal = i;
                             {
                                 note.check[0] === false ? (dcolor = 'red') : (dcolor = 'blue');
                             }
@@ -245,7 +252,6 @@ class Presentation extends React.Component {
                 ) : (
                         <div>
                             {this.props.ndata.map((note, i) => {
-                                tempVal = i;
                                 {
                                     note.check[0] === false ? (dcolor = 'red') : (dcolor = 'blue');
                                 }

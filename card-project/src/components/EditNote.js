@@ -47,7 +47,7 @@ class EditNote extends React.Component {
 		};
 	}
 	componentWillUpdate = (nextProps) => {
-		if (this.props.notes.id != nextProps.notes.id) {
+		if (this.props.notes.id !== nextProps.notes.id) {
 			this.setState({notes: Object.assign({}, nextProps.notes)});
 		}
 	  }

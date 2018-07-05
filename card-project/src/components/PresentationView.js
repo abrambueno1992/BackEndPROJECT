@@ -68,15 +68,16 @@ class PresentationView extends React.Component {
 			checked: true,
 			Complete: 'NOT COMPLETE',
 			ccolor : 'red',
+			notes: [],
+			original: [],
 		};
 		// this.toggle = this.toggle.bind(this);
 	}
 	componentWillUpdate = (nextProps) => {
-		if (this.props.notes.id != nextProps.notes.id) {
-			console.log("NOT EQUAL TO component will update", this.props.notes);
-			this.setState({notes: Object.assign({}, nextProps.notes)});
+		if (this.props.notes !== nextProps.notes) {
+			// this.setState({notes: Object.assign({}, nextProps.notes)});
+			this.setState({notes:  nextProps.notes});
 		}
-		console.log("component will update", this.props.notes);
 	  }
 	componentDidMount() {
 		// this.props.history.push('/notes')
@@ -138,73 +139,77 @@ class PresentationView extends React.Component {
 		titleI = [];
 		dcheck = [];
 		dcomplete = '';
-		// console.log(this.props.match.params.id)
-		return (
-			<div>
+		if (this.state.notes.length === 0) {
+			return (
 				<div>
-					<Link to={`/notes/edit/${this.props.id}`} style={linkSte}>
-						<span style={lst} >edit</span>
-					</Link>
-
-					<Link to={`#`} onClick={this.toggle} >
-						<span style={lst} >delete</span>
-					</Link>
-
-					{this.props.notes.map((note, i) => {
-						return (
-							<div style={hide} key={note + i}>
-								{noteI.push(note.note)}
-								{titleI.push(note.title)}
-								{dcheck.push(note.check)}
-							</div>
-						);
-					})}
-					<div style={hide}>
-					{dcheck[this.props.match.params.id][0] === false ? dcolor = 'red' : dcolor = 'blue'};
-					{dcheck[this.props.match.params.id][0] === false ? dcomplete = 'NOT COMPLETE' : dcomplete = 'COMPLETED'};
+					<h3>Loading</h3>
 					</div>
-					<div style={noteSt}>
-						<h1>{titleI[this.props.match.params.id]}</h1>
-						<h4>Complete Status: <span style={{color : dcolor}}> {dcomplete} </span> </h4>
-							<input
-								name="checkedB"
-								type="checkbox"
-								checked={dcheck[this.props.match.params.id][0]}
-								onChange={() => this.handleInputChange( this.props.notes[this.props.match.params.id].check[0] ,this.props.notes[this.props.match.params.id]._id )}
-								style={inpSt}
-							/>
-						{noteI[this.props.match.params.id]}
-						<label>
-
-						</label>
-					</div>
-				</div>
-
-				<Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
-					<ModalBody style={warning}>Are you sure you want to delete this?</ModalBody>
-					<ModalFooter>
-						<Link to={`/`} onClick={() => this.handleDelete(this.props.notes[this.props.id]._id)}>
-							<Button color="primary" style={bStyled} onClick={() => this.handleDelete(this.props.notes[this.props.id]._id)}>
-								Delete
-							</Button>
+			)
+		}
+		if (this.state.notes !== []) {
+			return (
+				<div>
+					<div>
+						<Link to={`/notes/edit/${this.props.id}`} style={linkSte}>
+							<span style={lst} >edit</span>
 						</Link>
-						<Button color="secondary" onClick={this.toggle} style={bStylec}>
-							No
-						</Button>
-					</ModalFooter>
-				</Modal>
-			</div>
-		);
+	
+						<Link to={`#`} onClick={this.toggle} >
+							<span style={lst} >delete</span>
+						</Link>
+	
+						{this.props.notes.map((note, i) => {
+							return (
+								<div style={hide} key={note + i}>
+									{noteI.push(note.note)}
+									{titleI.push(note.title)}
+									{dcheck.push(note.check)}
+								</div>
+							);
+						})}
+						<div style={hide}>
+						{dcheck[this.props.match.params.id][0] === false ? dcolor = 'red' : dcolor = 'blue'};
+						{dcheck[this.props.match.params.id][0] === false ? dcomplete = 'NOT COMPLETE' : dcomplete = 'COMPLETED'};
+						</div>
+						<div style={noteSt}>
+							<h1>{titleI[this.props.match.params.id]}</h1>
+							<h4>Complete Status: <span style={{color : dcolor}}> {dcomplete} </span> </h4>
+								<input
+									name="checkedB"
+									type="checkbox"
+									checked={dcheck[this.props.match.params.id][0]}
+									onChange={() => this.handleInputChange( this.props.notes[this.props.match.params.id].check[0] ,this.props.notes[this.props.match.params.id]._id )}
+									style={inpSt}
+								/>
+							{noteI[this.props.match.params.id]}
+							<label>
+	
+							</label>
+						</div>
+					</div>
+	
+					<Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
+						<ModalBody style={warning}>Are you sure you want to delete this?</ModalBody>
+						<ModalFooter>
+							<Link to={`/`} onClick={() => this.handleDelete(this.props.notes[this.props.id]._id)}>
+								<Button color="primary" style={bStyled} onClick={() => this.handleDelete(this.props.notes[this.props.id]._id)}>
+									Delete
+								</Button>
+							</Link>
+							<Button color="secondary" onClick={this.toggle} style={bStylec}>
+								No
+							</Button>
+						</ModalFooter>
+					</Modal>
+				</div>
+			);
+
+		}// else 
+
 	}
 }
 const mapDispatchToProps = (state, ownProps) => {
-	const noteId = ownProps.params;
-	if (noteId) {
-		console.log("This is mapStateToPRops, noteId", noteId);
-	}
-	if (!noteId) {
-		console.log("noteId not defined")
-	}
+	
 	return {
 		notes: state.notes
 	};

@@ -1,13 +1,4 @@
 import axios from 'axios';
-import qs from 'qs';
-// export const ADD_NOTE = 'ADD_NOTE';
-// export const DELETE_NOTE = 'DELETE_NOTE';
-// export const UPDATE_NOTE = 'UPDATE_NOTE';
-// export const CHECK_UPDATE = 'CHECK_UPDATE';
-// export const ADD_TAG = 'ADD_TAG'
-// export const REORDER_STATE = 'REORDER_STATE';
-// let notes = [];
-// let titles = [];
 
 export const CREATE_USER = 'CREATE_USER';
 export const CREATE_NOTE = 'CREATE_NOTE';
@@ -162,13 +153,7 @@ export const getNotesFromView = (history) => {
 export const updateNote = (obj, history) => {
     const token = localStorage.getItem('token');
     return (dispatch) => {
-        const data = {
-            'title': obj.title,
-            'note': obj.note,
-            'check': obj.check,
-            'tag': obj.tag,
-            'Id': '5b104d1826c49f0004eda91b'
-        };
+        
         const options = {
             method: 'PUT',
             headers: { 'content-type': 'application/json', 'Authorization': token },
@@ -229,10 +214,6 @@ export const updateUser = (obj, history) => {
 export const deleteNote = (obj, history) => {
     const token = localStorage.getItem('token');
     return (dispatch) => {
-
-        const data = {
-            'Id': '5b10763c5e85b6000400640d'
-        };
         const options = {
             method: 'DELETE',
             headers: { 'content-type': 'application/json', 'Authorization': token },

@@ -1,7 +1,7 @@
 import React from 'react';
 import { createNoteAction } from '../actions/actions'
 import { connect } from 'react-redux';
-import { Link, withRouter } from 'react-router-dom';
+import {  withRouter } from 'react-router-dom';
 
 const textarea = {
     width: '90%',
@@ -48,7 +48,7 @@ class CreateNew extends React.Component {
 		};
     }
     componentWillUpdate = (nextProps) => {
-        if (this.props.notes.id != nextProps.notes.id) {
+        if (this.props.notes.id !== nextProps.notes.id) {
             this.setState({notes: Object.assign({}, nextProps.notes)});
         }
       }
@@ -83,10 +83,8 @@ class CreateNew extends React.Component {
                 <h3 style={hSt} >Create New Note:</h3>
 				<input style={tStyle} type="text" name="title" value={this.state.title} placeholder="Note Title" onChange={this.handleTextInput} />
 				<input style={textarea} type="text" name="note"  value={this.state.note}  placeholder="Note Content" onChange={this.handleTextInput} />
-                {/* <button onClick={this.newNote} style={bStyle} ><Link to={`/`}>Save</Link></button> */}
-                {/* <Link to={`/`}  > */}
+            
                 <button style={bStyle} onClick={this.newNote}>Save</button>
-                {/* </Link> */}
 
 			</div>
 		);
