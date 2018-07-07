@@ -6,6 +6,7 @@ const startState = {
 	createdNotes: [],
 	updatednotes: [],
 	error: '',
+	expiration: ''
 
 };
 
@@ -21,7 +22,7 @@ export const notesReducer = (state = startState, action) => {
 			}));
 		case LOGIN_ACTION:
 			return (Object.assign({}, state, {
-				user: { ...state.user, token: action.payload, username: action.username, ID: action.Id }
+				user: { ...state.user, token: action.payload, username: action.username, ID: action.Id, expiration: action.expiration }
 			}));
 		case LOGOUT_ACTION:
 			return (Object.assign({}, state, {

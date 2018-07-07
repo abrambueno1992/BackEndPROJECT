@@ -99,7 +99,7 @@ export class PresentationMain extends React.Component {
 }
 const mapDispatchToProps = (state) => {
 	return {
-		notes: state.notes
+		notes: state.notes,
 	};
 };
 

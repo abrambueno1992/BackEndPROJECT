@@ -80,6 +80,16 @@ const desBtnLogout = {
     // marginTop: 10,
     marginBottom: 10,
     display: 'inline-flex'
+};
+const usrBtn = {
+    // padding: 5,
+    cursor: 'pointer',
+    fontWeight: 'bold',
+    color: 'red',
+    marginLeft: '66%',
+    // marginTop: 10,
+    // marginBottom: 10,
+    display: 'inline-flex'
 }
 const hide = {
     display: 'none'
@@ -197,12 +207,25 @@ class Presentation extends React.Component {
                 </div>
                 <div>
                     <h4 style={hSt}>Your Notes: {localStorage.getItem('username')} </h4>
+                    <div>
+                        <h4 style={hSt}>Expiration: {localStorage.getItem('expiration')} </h4>
+
+                    </div>
                     <span>
                         <h5 style={desBtn}>
                             <button style={desBtnLogout} onClick={this.handSignout}>
                                 Logout
 							</button>
+
+
                         </h5>
+                    </span>
+                    <span>
+                        <Link to="/userupdate">
+                            <button style={usrBtn} >
+                                <h4 >Edit User Credentials </h4>
+                            </button>
+                        </Link>
                     </span>
                     <span>
                         <h5 style={desBtn}>
@@ -285,7 +308,7 @@ class Presentation extends React.Component {
 
 const mapDispatchToProps = (state) => {
     return {
-        notes: state.notes
+        notes: state.notes,
     };
 };
 // export default Presentation;

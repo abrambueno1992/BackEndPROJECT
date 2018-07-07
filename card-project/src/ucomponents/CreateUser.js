@@ -23,7 +23,8 @@ class CreateUser extends React.Component {
             username: username.toLowerCase().toString(),
             password: password
         };
-        this.props.createUserAction(newObject, this.props.history)
+        this.props.createUserAction(newObject, this.props.history);
+        this.props.history.push('/login');
     }
     checkCredentials = () => {
         this.setState({ sent: true });

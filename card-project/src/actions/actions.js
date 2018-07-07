@@ -31,7 +31,7 @@ export const createUserAction = (obj, history) => {
                     username: username,
                     payload: resp
                 });
-                history.push('/login');
+                // history.push('/login');
             })
     }
 };
@@ -65,17 +65,61 @@ export const createNoteAction = (obj, history) => {
 }
 
 export const loginAction = (obj, history) => {
+    let today = new Date();
+    let time = today.getDate();
+    let hours = today.getHours();
+    let minutes = today.getMinutes();
+    let expire
+    if (hours < 12) {
+        if (hours === 11) {
+            hours = 12;
+            if (minutes >= 10) {
+                expire = hours + ':' + minutes + 'pm';
+            } else {
+                expire = hours + ':0' + minutes + 'pm';
+            }
+        } else {
+            hours += 1;
+            if (minutes >= 10) {
+                expire = hours + ':' + minutes + 'am';
+            } else {
+                expire = hours + ':0' + minutes + 'am';
+            }
+        }
+        //
+
+    } else {
+        if (hours === 23) {
+            hours = 12;
+            if (minutes >= 10) {
+                expire = hours + ':' + minutes + 'am';
+            } else {
+                expire = hours + ':0' + minutes + 'am';
+            }
+            
+        } else {
+            hours = hours - 12 + 1;
+            if (minutes >= 10) {
+                expire = hours + ':' + minutes + 'pm';
+            } else {
+                expire = hours + ':0' + minutes + 'pm';
+            }
+            
+        }
+    }
     return (dispatch) => {
         axios.post(`${ROOT_URL}login`, obj)
             .then(res => {
                 localStorage.setItem('token', res.data.token);
                 localStorage.setItem('username', res.data.username);
                 localStorage.setItem('ID', res.data.Id);
+                localStorage.setItem('expiration', expire);
                 dispatch({
                     type: LOGIN_ACTION,
                     payload: res.data.token,
                     username: res.data.username,
-                    Id: res.data.Id
+                    Id: res.data.Id,
+                    expiration: expire// (Math.floor(Date.now() / 1000) + (60*60))
                 });
                 history.push('/notes')
             })
@@ -153,7 +197,7 @@ export const getNotesFromView = (history) => {
 export const updateNote = (obj, history) => {
     const token = localStorage.getItem('token');
     return (dispatch) => {
-        
+
         const options = {
             method: 'PUT',
             headers: { 'content-type': 'application/json', 'Authorization': token },
@@ -203,7 +247,7 @@ export const updateUser = (obj, history) => {
                     type: UPDATE_USER,
                     payload: res.data
                 })
-                history.push('/login');
+                // history.push('/login');
 
 
             })
@@ -232,13 +276,14 @@ export const deleteNote = (obj, history) => {
 };
 export const deleteUser = (history) => {
     const token = localStorage.getItem('token');
+    let userID = localStorage.getItem('ID');
     localStorage.removeItem('token');
     localStorage.removeItem('username');
     localStorage.removeItem('ID');
     localStorage.removeItem('notes');
     return (dispatch) => {
         const data = {
-            'Id': localStorage.getItem('ID')
+            'Id': userID
         };
         const options = {
             method: 'DELETE',
