@@ -6,7 +6,16 @@ const mainStyle = {
     textAlign: 'center',
 };
 const btnStyle = {
-    marginTop: 20
+    marginTop: 20,
+    cursor: 'pointer',
+};
+const btnStyleDELete = {
+    marginTop: 20,
+    color: 'red',
+    fontWeight: 'bold',
+    backgroundColor: 'yellow',
+    padding: 10,
+    cursor: 'wait'
 }
 class UpdateUser extends React.Component {
     constructor(props) {
@@ -18,7 +27,11 @@ class UpdateUser extends React.Component {
             passwordconfirm: '',
             message: '',
             noteList: [],
-            IDlist: []
+            IDlist: [],
+            deleteConfirm: 0,
+            delmessage: "Delete User",
+            sentConfirm: false,
+            sentFailedMessage: ''
         };
     }
     componentDidMount = () => {
@@ -35,6 +48,16 @@ class UpdateUser extends React.Component {
             this.setState({ noteList: nextProps.notes, IDlist: tArr });
 
         }
+        if (this.state.sentConfirm === true && nextProps.updateCheck === true) {
+                this.setState({sentConfirm : false});
+                this.props.history.push('/notes')
+            
+        }
+        if (this.state.sentConfirm === true && this.props.updateCheck === false) { 
+            this.setState({sentFailedMessage: "Update failed because the username has already been taken, please try a different username"})
+
+            this.setState({sentConfirm : false});
+        }
     }
     handleInput = e => {
         e.preventDefault();
@@ -50,25 +73,32 @@ class UpdateUser extends React.Component {
         }
     }
     handleSubmit = () => {
+        this.setState({ sentConfirm: true });
         this.props.updateUser(this.state, this.props.history);
-        this.props.history.push('/notes')
+
     };
     handleDelete = () => {
-        let lengthA = this.state.IDlist.length;
-        for (let i = 0; lengthA > i; i++) {
-            let IDnote = {
-                'Id': this.state.IDlist[i]
+        if (this.state.deleteConfirm > 0) {
+            let lengthA = this.state.IDlist.length;
+            for (let i = 0; lengthA > i; i++) {
+                let IDnote = {
+                    'Id': this.state.IDlist[i]
+                }
+                this.props.deleteNote(IDnote, this.props.history);
             }
-            this.props.deleteNote(IDnote, this.props.history);
-        }
 
-        this.props.deleteUser(this.props.history)
+            this.props.deleteUser(this.props.history)
+
+        } else {
+            this.setState({ deleteConfirm: 1, delmessage: "Confirm Deletion of User and all Notes" });
+        }
     }
     render() {
         return (
             <div style={mainStyle}>
                 <h1>UpdateUser component </h1>
                 {this.state.message === '' ? <div></div> : <h3>{this.state.message}</h3>}
+                {(this.props.updateCheck === false && this.state.sentConfirm === true) ? <div> <h3>Update failed because the username has already been taken, please try a different username</h3><h4> For Security You'll need to log in, again.</h4> <Link to='/login'><button>Login</button></Link> </div>:<div></div>  }
                 <form>
                     <input
                         type="text"
@@ -99,16 +129,16 @@ class UpdateUser extends React.Component {
                         onChange={this.handleInput}
                     />
                 </form>
-                <div style={btnStyle}>
-                    <button onClick={this.checkCredentials}>Submit</button>
+                <div >
+                    <button style={btnStyle} onClick={this.checkCredentials}>Submit</button>
                 </div>
-                <div style={btnStyle}>
+                <div >
                     <Link to="/notes">
-                        <button>Return to Notes</button>
+                        <button style={btnStyle}>Return to Notes</button>
                     </Link>
                 </div>
-                <div style={btnStyle}>
-                    <button onClick={this.handleDelete}>Delete User</button>
+                <div >
+                    <button style={btnStyleDELete} onClick={this.handleDelete}>{this.state.delmessage}</button>
                 </div>
             </div>
 
@@ -120,7 +150,10 @@ class UpdateUser extends React.Component {
 const mapStateToProps = state => {
     return {
         user: state.user,
-        notes: state.notes
+        notes: state.notes,
+        updateReceived: state.updateReceived,
+        updateCheck: state.updateCheck,
+        error: state.error
 
     }
 };

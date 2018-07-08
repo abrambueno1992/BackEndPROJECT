@@ -42,54 +42,38 @@ const noteStyle = {
 };
 const desBtn = {
     color: 'black',
-    // marginRight: 0
-    // padding: 5,
-    // cursor: 'pointer'
     fontWeight: 'bold',
-    marginLeft: '60%',
     marginTop: 10,
-    // display: 'inline-flex'
 };
 const desBtn2 = {
-    // marginLeft: '3%',
     cursor: 'pointer',
-    padding: 5,
-    // cursor: 'pointer'
+    padding: 2,
     fontWeight: 'bold',
-    marginLeft: '7%',
+    marginLeft: '3%',
     marginTop: 10,
-    display: 'inline-flex'
 };
 const desBtn3 = {
-    // marginLeft: '4%',
     cursor: 'pointer',
-    padding: 5,
-    // cursor: 'pointer'
+    padding: 2,
     fontWeight: 'bold',
-    marginLeft: '7%',
+    marginLeft: '3%',
     marginTop: 10,
-    display: 'inline-flex'
 };
+const stybox = {
+    marginLeft: '60%'
+}
 const desBtnLogout = {
-    // marginLeft: '32%',
-    padding: 5,
+    padding: 2,
     cursor: 'pointer',
     fontWeight: 'bold',
+    marginLeft: 0,
     color: 'red',
-    marginLeft: '38%',
-    // marginTop: 10,
     marginBottom: 10,
-    display: 'inline-flex'
 };
 const usrBtn = {
-    // padding: 5,
     cursor: 'pointer',
     fontWeight: 'bold',
     color: 'red',
-    marginLeft: '66%',
-    // marginTop: 10,
-    // marginBottom: 10,
-    display: 'inline-flex'
 }
 const hide = {
     display: 'none'
@@ -205,44 +189,46 @@ class Presentation extends React.Component {
 
                     {this.state.showAscending === true ? (changeOrder = 'DESCENDING') : (changeOrder = 'ASCENDING')}
                 </div>
-                <div>
+                <div >
                     <h4 style={hSt}>Your Notes: {localStorage.getItem('username')} </h4>
                     <div>
                         <h4 style={hSt}>Expiration: {localStorage.getItem('expiration')} </h4>
 
                     </div>
-                    <span>
-                        <h5 style={desBtn}>
-                            <button style={desBtnLogout} onClick={this.handSignout}>
-                                Logout
-							</button>
+                    <div style={stybox}>
+                        <span>
+                            <h5 style={desBtn}>
+                                <button style={desBtnLogout} onClick={this.handSignout}>
+                                    Logout
+							    </button>
 
 
-                        </h5>
-                    </span>
-                    <span>
-                        <Link to="/userupdate">
-                            <button style={usrBtn} >
-                                <h4 >Edit User Credentials </h4>
-                            </button>
-                        </Link>
-                    </span>
-                    <span>
-                        <h5 style={desBtn}>
-                            Change Order
+                            </h5>
+                        </span>
+                        <span>
+                            <Link to="/userupdate">
+                                <button style={usrBtn} >
+                                    <h5 style={usrBtn}> Edit User Credentials</h5>
+                                </button>
+                            </Link>
+                        </span>
+                        <span>
+                            <h5 style={desBtn}>
+                                Change Order
 							<button style={desBtn2} onClick={() => this.handleOrder(this.props.ndata)}>
-                                {changeOrder}
-                            </button>
-                        </h5>
-                    </span>
-                    <span>
-                        <h5 style={desBtn}>
-                            Order by Tag
+                                    {changeOrder}
+                                </button>
+                            </h5>
+                        </span>
+                        <span>
+                            <h5 style={desBtn}>
+                                Order by Tag
 							<button style={desBtn3} onClick={() => this.handleTag(this.props.ndata)}>
-                                Enable/Disable
+                                    Enable/Disable
 							</button>
-                        </h5>
-                    </span>
+                            </h5>
+                        </span>
+                    </div>
                 </div>
                 {this.state.showAscending ? (
                     <div>

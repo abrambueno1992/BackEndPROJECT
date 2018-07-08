@@ -108,7 +108,7 @@ class ModalComponent extends Component {
 
 						<button onClick={this.toggle} style={tagSt} >Tag:</button>
 
-						<span style={tagSt2}>
+						<span onClick={this.toggle} style={tagSt2}>
 							<span style={{ color: this.props.color }}> {this.props.notes[this.props.index].tag}</span>
 						</span>
 					</span>

@@ -6,7 +6,9 @@ const startState = {
 	createdNotes: [],
 	updatednotes: [],
 	error: '',
-	expiration: ''
+	expiration: '',
+	updateCheck: false,
+	updateReceived: ''
 
 };
 
@@ -37,10 +39,13 @@ export const notesReducer = (state = startState, action) => {
 		case UPDATE_NOTE:
 			return (Object.assign({}, state, {
 				updatednotes: action.payload,
+				
 				notes: [],
 			}));
 		case UPDATE_USER:
 			return (Object.assign({}, state, {
+				updateCheck: true,
+				updateReceived: action.payload,
 				user: []
 			}));
 		case DELETE_NOTE:
