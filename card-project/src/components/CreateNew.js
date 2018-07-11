@@ -44,7 +44,8 @@ class CreateNew extends React.Component {
 		this.state = {
 			title: '',
             note: '',
-            tag: ''
+            tag: '',
+            notes: []
 		};
     }
     componentWillUpdate = (nextProps) => {

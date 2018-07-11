@@ -16,7 +16,8 @@ export const notesReducer = (state = startState, action) => {
 	switch (action.type) {
 		case CREATE_USER:
 			return (Object.assign({}, state, {
-				user: { username: action.payload.data.username, ID: action.payload.data._id }
+				user: { username: action.payload.data.username, ID: action.payload.data._id},
+				updateCheck: true 
 			}));
 		case REORDER_STATE:
 			return (Object.assign({}, state, {
@@ -24,7 +25,8 @@ export const notesReducer = (state = startState, action) => {
 			}));
 		case LOGIN_ACTION:
 			return (Object.assign({}, state, {
-				user: { ...state.user, token: action.payload, username: action.username, ID: action.Id, expiration: action.expiration }
+				user: { ...state.user, token: action.payload, username: action.username, ID: action.Id },
+				expiration: action.expiration
 			}));
 		case LOGOUT_ACTION:
 			return (Object.assign({}, state, {
@@ -34,7 +36,8 @@ export const notesReducer = (state = startState, action) => {
 			}));
 		case GET_NOTES_ACTION:
 			return (Object.assign({}, state, {
-				notes: action.payload
+				notes: action.payload,
+				updateCheck: false
 			}));
 		case UPDATE_NOTE:
 			return (Object.assign({}, state, {
