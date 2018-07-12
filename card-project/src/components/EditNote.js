@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { updateNote } from '../actions/actions';
+import { updateNote, getNotesAction } from '../actions/actions';
 import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
 
@@ -43,17 +43,23 @@ class EditNote extends React.Component {
 		super(props);
 		this.state = {
 			title: '',
-			note: ''
+			note: '',
+			notes: []
 		};
 	}
 	componentWillUpdate = (nextProps) => {
-		if (this.props.notes.id !== nextProps.notes.id) {
-			this.setState({notes: Object.assign({}, nextProps.notes)});
+		console.log("NoteS", nextProps.notes)
+		if (this.props.notes !== nextProps.notes) {
+			let noteTitle = (nextProps.notes[this.props.match.params.idE] !== undefined) ? nextProps.notes[this.props.match.params.idE].title : <div></div>
+
+			let noteContent = (nextProps.notes[this.props.match.params.idE] !== undefined) ? nextProps.notes[this.props.match.params.idE].note : <div></div>
+			this.setState({notes: nextProps.notes, note:noteContent, title: noteTitle });
+
 		}
 	  }
 
 	componentDidMount() {
-		this.props.notes;
+		this.props.getNotesAction(this.props.history);
 
 	}
 
@@ -80,6 +86,8 @@ class EditNote extends React.Component {
 
 	};
 	render() {
+		console.log("This is the note from EditNote",  this.props.match.params.idE)
+		let noteContent = (this.props.notes[this.props.match.params.idE] !== undefined) ? this.props.notes[this.props.match.params.idE].note : <div></div>
 		return (
 			<div style={mainSt}>
 				<h3 style={hSt}>Edit Note:</h3>
@@ -96,7 +104,7 @@ class EditNote extends React.Component {
 					type="text"
 					name="note"
 					value={this.state.note}
-					placeholder="Note Content"
+					placeholder={noteContent} //"Note Content"
 					onChange={this.handleTextInput}
 				/>
 				<Link to={`/`} onClick={this.newNote} style={bStyle}>
@@ -111,4 +119,4 @@ const mapDispatchToProps = (state) => {
 		notes: state.notes
 	};
 };
-export default withRouter(connect(mapDispatchToProps, { updateNote })(EditNote));
+export default withRouter(connect(mapDispatchToProps, { updateNote, getNotesAction })(EditNote));
