@@ -117,7 +117,7 @@ const RouTING = () => {
 	// if (this.props.history.push('/'))
 	return (
 
-		<div>
+		<div style={{height:"100%"}}>
 			<Route path="/" exact component={withRouter(Home)} />
 			<Route path="/usercreate" exact component={withRouter(CreateUser)} />
 			<Route path="/login" exact component={withRouter(Login)} />
