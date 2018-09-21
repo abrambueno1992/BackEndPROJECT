@@ -31,7 +31,7 @@ export const notesReducer = (state = startState, action) => {
 		case LOGOUT_ACTION:
 			return (Object.assign({}, state, {
 				user: [],
-				notes: [],
+				notes: null,
 				createdNotes: [],
 			}));
 		case GET_NOTES_ACTION:
