@@ -27,7 +27,7 @@ import './App.css';
 
 function LeftContent() {
 	return (
-		<div className="LeftContent">
+		<div  className="LeftContent">
 			<LambdaSide />
 		</div>
 	);
@@ -51,10 +51,15 @@ function SplitPane(props) {
 	);
 }
 const NoteHome = (props) => {
-	return <SplitPane left={<LeftContent />} right={<RightContent notes={props.notes} />} />;
+	return (
+	// <div style={{ height: '100%' }}>
+	 <SplitPane left={<LeftContent />} right={<RightContent notes={props.notes} />} />
+
+	// </div>
+	)
 };
 const New = (props) => {
-	return <SplitPane left={<LambdaNewL />} right={<LambdaNewR />} />;
+	return <SplitPane left={<LambdaNewL />} right={<LambdaNewR />} />
 };
 const View = (props) => {
 	let id = props.match.params.id;
@@ -117,7 +122,7 @@ const RouTING = () => {
 	// if (this.props.history.push('/'))
 	return (
 
-		<div style={{height:"100%"}}>
+		<div className="rootMain" >
 			<Route path="/" exact component={withRouter(Home)} />
 			<Route path="/usercreate" exact component={withRouter(CreateUser)} />
 			<Route path="/login" exact component={withRouter(Login)} />

@@ -15,7 +15,17 @@ const bStyle = {
 	fontWeight: 'bold'
 };
 const mSt = {
-	marginLeft: '7.5%'
+	marginLeft: '7.5%',
+	// display: 'flex',
+	// boxSizing: 'inherit',
+	// width: '100%',
+	// display: 'flex',
+	// flexDirection: 'column',
+	// border: '2px solid black',
+	// justifyContent: 'flex-start',
+	// alignItems: 'stretch',
+	// height: '100%',
+
 	// height: '2000px'
 };
 const hSt = {
