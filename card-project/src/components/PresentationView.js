@@ -86,10 +86,14 @@ class PresentationView extends React.Component {
 		// this.props.history.push('/notes')
 		// this.props.history.push(`/notes/view/${this.props.match.params.id}`)
 		// this.refresh();
-		this.props.getNotesAction(this.props.history);
+		// this.props.getNotesAction(this.props.history);
 		// this.props.history.push('/notes')
 		// this.props.history.push(`/notes/view/${this.props.match.params.id}`)
+		if (!this.props.notes) {
+			this.props.getNotesAction(this.props.history)
 		this.setState({ list: this.props.notes })
+
+		}
 	}
 	refresh = () => {
 		this.props.notes;
@@ -142,7 +146,7 @@ class PresentationView extends React.Component {
 		titleI = [];
 		dcheck = [];
 		dcomplete = '';
-		if (this.state.notes.length === 0) {
+		if (this.props.notes === null) {
 			return (
 				<div>
 					<h3>Loading</h3>

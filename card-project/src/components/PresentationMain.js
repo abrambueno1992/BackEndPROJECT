@@ -22,14 +22,17 @@ export class PresentationMain extends React.Component {
 	}
 	componentWillUpdate = (nextProps) => {
 	  if (this.props.notes !== nextProps.notes) {
-		  this.setState({notes: Object.assign({}, nextProps.notes)});
+		  this.setState({notes: nextProps.notes});
 	  }
+	  if (this.props.reOrder === true) {
+		this.setState({notes: this.props.notes})
+	}
+	if (!this.props.notes && !nextProps.notes) {
+		this.props.getNotesAction(this.props.history)
 	}
 	
-	componentWillMount = () => {
-		this.props.getNotesAction(this.props.history)
-		
 	}
+	
 
 	
 	componentDidMount() {

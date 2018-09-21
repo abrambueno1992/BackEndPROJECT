@@ -1,7 +1,7 @@
 import { CREATE_NOTE, REORDER_STATE, CREATE_USER, LOGOUT_ACTION, LOGIN_ACTION, GET_NOTES_ACTION, UPDATE_NOTE, UPDATE_USER, DELETE_NOTE, DELETE_USER, ERRORS } from '../actions/actions'
 
 const startState = {
-	notes: [],
+	notes: null,
 	user: [],
 	createdNotes: [],
 	updatednotes: [],
@@ -42,8 +42,9 @@ export const notesReducer = (state = startState, action) => {
 		case UPDATE_NOTE:
 			return (Object.assign({}, state, {
 				updatednotes: action.payload,
+				updatStatus: action.updatStatus,
 				
-				notes: [],
+				notes: null,
 			}));
 		case UPDATE_USER:
 			return (Object.assign({}, state, {
@@ -53,7 +54,7 @@ export const notesReducer = (state = startState, action) => {
 			}));
 		case DELETE_NOTE:
 			return (Object.assign({}, state, {
-				notes: []
+				notes: null
 			}));
 		case DELETE_USER:
 			return (Object.assign({}, state, {
@@ -67,7 +68,9 @@ export const notesReducer = (state = startState, action) => {
 			);
 		case CREATE_NOTE:
 			return (Object.assign({}, state, {
-				createdNotes: action.payload
+				createdNotes: action.payload,
+				createNoteStatus: action.createNoteStatus,
+				notes: null
 			}));
 
 		default:

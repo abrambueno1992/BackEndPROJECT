@@ -56,7 +56,8 @@ export const createNoteAction = (obj, history) => {
             .then((resp) => {
                 dispatch({
                     type: CREATE_NOTE,
-                    payload: resp.data
+                    payload: resp.data,
+                    createNoteStatus: true
                 });
             })
             .catch(() => dispatch({ type: ERRORS }));
@@ -210,7 +211,8 @@ export const updateNote = (obj, history) => {
 
                 dispatch({
                     type: UPDATE_NOTE,
-                    payload: res.data
+                    payload: res.data,
+                    updatStatus: true
                 });
 
                 history.push('/notes')

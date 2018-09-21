@@ -94,7 +94,6 @@ class Presentation extends React.Component {
             orderTag: false,
             rerender: 0,
             autheticated: 'Authenticated, Access Granted',
-
         };
     }
 
@@ -102,8 +101,6 @@ class Presentation extends React.Component {
 
     handleInputChange = (e) => {
         this.setState({ [e.target.name]: e.target.value });
-
-
     };
     handleTag = (tname, index) => {
         this.setState({ tag: tname });
@@ -121,7 +118,8 @@ class Presentation extends React.Component {
             return result * sortOrder;
         };
     };
-    handleOrder = (noteData) => {
+    handleOrder = () => {
+        let noteData = this.props.ndata
         let norder;
         if (this.state.showAscending === true) {
             norder = noteData.slice(0).reverse().map((note, i) => {
@@ -151,8 +149,8 @@ class Presentation extends React.Component {
         }
 
     };
-    handleTag = (notedata) => {
-
+    handleTag = () => {
+        let notedata = this.props.ndata
         if (this.state.orderTag === false) {
             originalNotes = notedata.map((note) => {
                 return note;
@@ -183,6 +181,13 @@ class Presentation extends React.Component {
         this.props.getNotesAction(this.props.history)
     }
     render() {
+        if (!this.props.notes) {
+            return (
+                <div>
+                    <h1>Loading</h1>
+                </div>
+            )
+        }
         return (
             <div>
                 <div style={hide}>
@@ -215,7 +220,7 @@ class Presentation extends React.Component {
                         <span>
                             <h5 style={desBtn}>
                                 Change Order
-							<button style={desBtn2} onClick={() => this.handleOrder(this.props.ndata)}>
+							<button style={desBtn2} onClick={this.handleOrder}>
                                     {changeOrder}
                                 </button>
                             </h5>
@@ -223,7 +228,7 @@ class Presentation extends React.Component {
                         <span>
                             <h5 style={desBtn}>
                                 Order by Tag
-							<button style={desBtn3} onClick={() => this.handleTag(this.props.ndata)}>
+							<button style={desBtn3} onClick={this.handleTag}>
                                     Enable/Disable
 							</button>
                             </h5>
