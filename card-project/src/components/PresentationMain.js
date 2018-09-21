@@ -18,27 +18,34 @@ export class PresentationMain extends React.Component {
 		this.state = {
 			notes: []
 		}
-		
+
 	}
 	componentWillUpdate = (nextProps) => {
-	  if (this.props.notes !== nextProps.notes) {
-		  this.setState({notes: nextProps.notes});
-	  }
-	  if (this.props.reOrder === true) {
-		this.setState({notes: this.props.notes})
-	}
-	if (!this.props.notes && !nextProps.notes) {
-		this.props.getNotesAction(this.props.history)
-	}
-	
-	}
-	
+		if (this.props.notes !== nextProps.notes) {
+			this.setState({ notes: nextProps.notes });
+		}
+		if (this.props.reOrder === true) {
+			this.setState({ notes: this.props.notes })
+		}
+		if (!this.props.notes && !nextProps.notes) {
+			this.props.getNotesAction(this.props.history)
+		}
+		if (this.props.error !== nextProps.error && nextProps.error === 'TokenExpiredError') {
+			localStorage.removeItem('token');
+			localStorage.removeItem('username');
+			localStorage.removeItem('ID');
+			localStorage.removeItem('notes');
+			this.props.history.push('/');
+		}
 
-	
+	}
+
+
+
 	componentDidMount() {
 		if (localStorage.getItem('token') !== null && localStorage.getItem('ID') !== null) {
-			
-				this.setState({list: this.props.notes})
+
+			this.setState({ list: this.props.notes })
 		} else {
 			this.setState({ autheticated: 'Not authenticated, Access Denied' });
 			this.props.history.push('/')
@@ -69,7 +76,7 @@ export class PresentationMain extends React.Component {
 		});
 		this.props.history.push('/notes')
 	};
-	handleInputChange = (checkBoolean, id) => {	
+	handleInputChange = (checkBoolean, id) => {
 		// event.preventDefault();
 		let trueObj = {
 			'check': true,
@@ -88,11 +95,11 @@ export class PresentationMain extends React.Component {
 		// this.props.checkUpdate(this.state.checked, this.props.id);
 		// window.location.reload() 
 
-		
+
 	}
-	
+
 	render() {
-	
+
 		return (
 			<div style={mainSt}>
 				<Presentation ndata={this.props.notes} />
@@ -103,6 +110,7 @@ export class PresentationMain extends React.Component {
 const mapDispatchToProps = (state) => {
 	return {
 		notes: state.notes,
+		error: state.error
 	};
 };
 

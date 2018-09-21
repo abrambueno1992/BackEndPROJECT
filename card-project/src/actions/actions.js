@@ -165,7 +165,7 @@ export const getNotesAction = (history) => {
                     payload: resp.data
                 })
             })
-            .catch(err => dispatch({ type: ERRORS }));
+            .catch(err => dispatch({ type: ERRORS, payload: err.response.data.name }));
     }
 };
 export const getNotesFromView = (history) => {

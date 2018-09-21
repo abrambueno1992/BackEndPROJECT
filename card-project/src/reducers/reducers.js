@@ -37,7 +37,7 @@ export const notesReducer = (state = startState, action) => {
 		case GET_NOTES_ACTION:
 			return (Object.assign({}, state, {
 				notes: action.payload,
-				updateCheck: false
+				updateCheck: false,
 			}));
 		case UPDATE_NOTE:
 			return (Object.assign({}, state, {
@@ -63,7 +63,8 @@ export const notesReducer = (state = startState, action) => {
 		case ERRORS:
 			return (
 				Object.assign({}, state, {
-					error: 'Error'
+				error: action.payload
+					
 				})
 			);
 		case CREATE_NOTE:
