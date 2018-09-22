@@ -41,9 +41,7 @@ const ntSt = {
 
 
 const noteStyle = {
-
     margin: 10
-
 };
 const desBtn = {
     color: 'black',
