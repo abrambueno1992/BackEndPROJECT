@@ -1,8 +1,11 @@
 import React from 'react';
 import { createUserAction, getNotesAction } from '../actions/actions';
 import { connect } from 'react-redux';
+import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
 const mainStyle = {
     textAlign: 'center',
+    width: '50%',
+    marginLeft: '25%',
 }
 class CreateUser extends React.Component {
     constructor(props) {
@@ -28,21 +31,21 @@ class CreateUser extends React.Component {
 
     componentWillUpdate = (nextProps) => {
         if (this.state.sentConfirm === true) {
-            
+
             console.log("Props for check update", this.props.updateCheck, nextProps.updateCheck);
             console.log("message and sentconfirm", this.state.message, this.state.sentConfirm);
-        } 
+        }
         if (this.state.sentConfirm === true && nextProps.updateCheck === true) {
             console.log("Redirect")
-            this.setState({sentConfirm : false});
+            this.setState({ sentConfirm: false });
             this.props.history.push('/login')
-        
-    }
-    if (this.state.sentConfirm === true && this.props.updateCheck === false) { 
-        this.setState({sentFailedMessage: "Update failed because the username has already been taken, please try a different username"})
 
-        this.setState({sentConfirm : false});
-    }
+        }
+        if (this.state.sentConfirm === true && this.props.updateCheck === false) {
+            this.setState({ sentFailedMessage: "Update failed because the username has already been taken, please try a different username" })
+
+            this.setState({ sentConfirm: false });
+        }
     }
     newCredentials = () => {
         let username = this.state.username;
@@ -51,7 +54,7 @@ class CreateUser extends React.Component {
             username: username.toLowerCase().toString(),
             password: password
         };
-        this.setState({ username: '',usernameconfirm: '' , password: '', passwordconfirm: '' });
+        this.setState({ username: '', usernameconfirm: '', password: '', passwordconfirm: '' });
         this.setState({ sentConfirm: true });
         this.props.createUserAction(newObject, this.props.history);
         // this.props.history.push('/login');
@@ -70,48 +73,70 @@ class CreateUser extends React.Component {
         this.setState({ [name]: value });
     }
     render() {
-        
-        // console.log("This is this.state.sentFailedMessage", this.state.sentFailedMessage, this.state.status, this.state.sent, this.props.updateCheck)
+
         return (
-            <div style={mainStyle} >
-                <h3>CreateUser Component</h3>
+            <div style={mainStyle}  >
+                <div >
+                <h3>Please Register an Account</h3>
+
+                </div>
                 {this.state.message === '' ? <div></div> : <h3>{this.state.message}</h3>}
-                {(this.props.updateCheck === false && this.state.sentConfirm === true) ? <div> <h3>Update failed because the username has already been taken, please try a different username</h3> </div>:<div></div>  }
-                <form>
-                    <input
-                        type="text"
-                        placeholder="Enter new username"
-                        name="username"
+                {(this.props.updateCheck === false && this.state.sentConfirm === true) ? <div> <h3>Update failed because the username has already been taken, please try a different username</h3> </div> : <div></div>}
+                
+
+                <Form>
+                    <FormGroup>
+                        <Label for="exampleText">Username</Label>
+                        <Input 
+                        type="text" 
+                        name="username" 
                         value={this.state.username}
+                        id="exampleText" 
+                        placeholder="Enter new username" 
                         onChange={this.handleInput}
-                    />
-                    <input
-                        type="text"
-                        placeholder="Confirm new username"
+                        />
+                    </FormGroup>
+                    <FormGroup>
+                        <Label for="exampleText2">Confirm Username</Label>
+                        <Input 
+                        type="text" 
                         name="usernameconfirm"
                         value={this.state.usernameconfirm}
+                        id="exampleText2" 
+                        placeholder="Confirm new username" 
                         onChange={this.handleInput}
-                    />
-                    <input
-                        type="password"
-                        placeholder="Enter password"
+                        />
+                    </FormGroup>
+                    <FormGroup>
+                        <Label for="examplePassword">Password</Label>
+                        <Input 
+                        type="password" 
                         name="password"
                         value={this.state.password}
+                        id="examplePassword" 
+                        placeholder="Enter password" 
                         onChange={this.handleInput}
-                    />
-                    <input
-                        type="password"
+                        />
+                    </FormGroup>
+                    <FormGroup>
+                        <Label for="examplePassword2">Password</Label>
+                        <Input 
+                        type="password" 
+                        value={this.state.password}
+                        id="examplePassword2" 
                         name="passwordconfirm"
                         placeholder="Confirm Password"
                         value={this.state.passwordconfirm}
                         onChange={this.handleInput}
-                    />
-                </form>
-                <div>
+                        />
+                    </FormGroup>
+          
+                    {/* <Button onClick={this.checkCredentials}>Submit</Button> */}
+                </Form>
+                <div style={{textAlign: 'center'}}>
 
-                    {/* <Link to="/login"> */}
-                    <button onClick={this.checkCredentials} >Submit </button>
-                    {/* </Link > */}
+                    <Button onClick={this.checkCredentials} color="primary">Submit</Button>{' '}
+                   
                 </div>
             </div>
         )

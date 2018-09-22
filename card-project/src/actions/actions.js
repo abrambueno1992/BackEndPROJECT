@@ -124,10 +124,10 @@ export const loginAction = (obj, history) => {
                 });
                 history.push('/notes')
             })
-            .catch(() => {
+            .catch((err) => {
                 localStorage.removeItem('token');
                 localStorage.removeItem('username');
-                dispatch({ type: ERRORS });
+                dispatch({ type: ERRORS, payload: err.response.data.error });
             });
     }
 };

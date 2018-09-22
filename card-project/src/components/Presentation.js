@@ -3,7 +3,7 @@ import ModalComponent from './ModalComponent';
 import { logoutAction, reorderState, getNotesAction } from '../actions/actions';
 import { connect } from 'react-redux';
 import { withRouter, Link } from 'react-router-dom'
-
+import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
 const icSt = {
     display: 'inline-flex',
     backgroundColor: 'white',
@@ -21,9 +21,14 @@ const icSt = {
 const hSt = {
     fontWeight: 'bold',
     marginLeft: '3%',
-    marginTop: 10,
-    display: 'inline-flex'
+    // marginTop: 10,
+    display: 'inline',
+    
 };
+const userExpire = {
+    // textDecoration: 'underline overline',
+    color:'orange'
+}
 
 const ntSt = {
     display: 'inline-flex',
@@ -43,7 +48,7 @@ const noteStyle = {
 const desBtn = {
     color: 'black',
     fontWeight: 'bold',
-    marginTop: 10,
+    // marginTop: 10,
 };
 const desBtn2 = {
     cursor: 'pointer',
@@ -57,23 +62,28 @@ const desBtn3 = {
     padding: 2,
     fontWeight: 'bold',
     marginLeft: '3%',
-    marginTop: 10,
+    // marginTop: 10,
 };
 const stybox = {
-    marginLeft: '60%'
+    marginLeft: '57%',
+    width: '30%',
+    // position: 'absolute',
+    marginTop: '0%'
 }
 const desBtnLogout = {
     padding: 2,
     cursor: 'pointer',
     fontWeight: 'bold',
     marginLeft: 0,
-    color: 'red',
-    marginBottom: 10,
+    // color: 'red',
+    // marginBottom: 2,
+    width: '50%'
 };
 const usrBtn = {
     cursor: 'pointer',
     fontWeight: 'bold',
-    color: 'red',
+    // width: '30%'
+    // color: 'red',
 }
 const hide = {
     display: 'none'
@@ -195,43 +205,39 @@ class Presentation extends React.Component {
                     {this.state.showAscending === true ? (changeOrder = 'DESCENDING') : (changeOrder = 'ASCENDING')}
                 </div>
                 <div >
-                    <h4 style={hSt}>Your Notes: {localStorage.getItem('username')} </h4>
+                    <h4 style={hSt}>Your Notes: <span style={userExpire}> {localStorage.getItem('username')}</span>  </h4>
                     <div>
-                        <h4 style={hSt}>Expiration: {localStorage.getItem('expiration')} </h4>
+                        <h4 style={hSt}>Expiration: <span style={userExpire}>{localStorage.getItem('expiration')}</span>  </h4>
 
                     </div>
                     <div style={stybox}>
                         <span>
-                            <h5 style={desBtn}>
-                                <button style={desBtnLogout} onClick={this.handSignout}>
-                                    Logout
-							    </button>
-
-
-                            </h5>
+                            <h6 style={desBtn}>
+                                <Button color="danger" style={desBtnLogout} onClick={this.handSignout}>Logout</Button>{' '}
+                            </h6>
                         </span>
                         <span>
                             <Link to="/userupdate">
-                                <button style={usrBtn} >
-                                    <h5 style={usrBtn}> Edit User Credentials</h5>
-                                </button>
+                            <h6 style={usrBtn}>
+                            <Button color="secondary" style={usrBtn}>Edit User Credentials</Button>{' '}
+                            
+                            </h6>
                             </Link>
                         </span>
                         <span>
-                            <h5 style={desBtn}>
-                                Change Order
-							<button style={desBtn2} onClick={this.handleOrder}>
-                                    {changeOrder}
-                                </button>
-                            </h5>
+                            <h6 style={desBtn}>
+                                <span style={userExpire}>Change Order</span>
+                                
+                                <Button color="primary" style={desBtn2} onClick={this.handleOrder}>{changeOrder}</Button>{' '}
+                            </h6>
                         </span>
                         <span>
-                            <h5 style={desBtn}>
-                                Order by Tag
-							<button style={desBtn3} onClick={this.handleTag}>
-                                    Enable/Disable
-							</button>
-                            </h5>
+                            <h6 style={desBtn}>
+                            <span style={userExpire}> Order by Tag</span>
+
+                                
+                            <Button color="primary" style={desBtn3} onClick={this.handleTag}>Enable/Disable</Button>{' '}
+                            </h6>
                         </span>
                     </div>
                 </div>
