@@ -66,7 +66,10 @@ export default (Page, { loginRequired = true, logoutRequired = false } = {}) =>
       //   if (adminRequired && (!user || !user.isAdmin)) {
       //     return null;
       //   }
-
-      return <Page {...this.props} />;
+      if (this.state.authenticated) {
+        return <Page {...this.props} />;
+      } else {
+        return null;
+      }
     }
   };

@@ -40,9 +40,10 @@ export class PresentationMain extends React.Component {
   };
 
   componentDidMount() {
-	  if (this.props.notes === null) {
-		  this.props.getNotesAction(this.props.history);
-	  }
+    console.log("CDM executed, security risk");
+    if (this.props.notes === null) {
+      this.props.getNotesAction(this.props.history);
+    }
     // if (
     //   localStorage.getItem("token") !== null &&
     //   localStorage.getItem("ID") !== null
