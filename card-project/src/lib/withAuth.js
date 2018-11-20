@@ -43,7 +43,7 @@ export default (Page, { loginRequired = true, logoutRequired = false } = {}) =>
       //     Router.push('/customer/my-books', '/my-books');
       //   }
       if (this.state.authenticated === true) {
-        this.props.history.push("/notes");
+        // this.props.history.push("/notes");
         console.log("true, props are", this.props);
       }
       if (this.state.authenticated === false) {
