@@ -4,6 +4,7 @@ import { Button, Modal, ModalBody, ModalFooter } from "reactstrap";
 
 import { deleteNote, updateNote, getNotesAction } from "../actions/actions";
 import { connect } from "react-redux";
+import withAuth from "../lib/withAuth";
 
 const bStylec = {
   marginTop: 20,
@@ -252,5 +253,5 @@ export default withRouter(
   connect(
     mapDispatchToProps,
     { deleteNote, updateNote, getNotesAction }
-  )(PresentationView)
+  )(withAuth(PresentationView))
 );

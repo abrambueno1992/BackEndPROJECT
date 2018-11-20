@@ -2,6 +2,7 @@ import React from "react";
 import { createNoteAction } from "../actions/actions";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
+import withAuth from "../lib/withAuth";
 
 const textarea = {
   width: "90%",
@@ -119,5 +120,5 @@ export default withRouter(
   connect(
     mapDispatchToProps,
     { createNoteAction }
-  )(CreateNew)
+  )(withAuth(CreateNew))
 );
